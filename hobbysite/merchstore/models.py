@@ -15,4 +15,3 @@ class Product(models.Model):
     # https://stackoverflow.com/questions/23739030/restrict-django-floatfield-to-2-decimal-places
     # {{ value | floatformat:2 }} when I get around to making the templaes
     price = models.FloatField()
-    
