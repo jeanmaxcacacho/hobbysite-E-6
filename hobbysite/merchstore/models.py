@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 class ProductType(models.Model):
     name = models.CharField(max_length=255)
@@ -8,6 +7,10 @@ class ProductType(models.Model):
 
     def __str__(self):
         return self.name
+
+    # is this right? lmao
+    def get_absolute_url(self):
+        return reverse(self.name, args=[str(self.name)])
     
 
 class Product(models.Model):
@@ -25,3 +28,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name} -- {self.product_type}"
+
+    # I don't even know what I'm looking at TBH
+    def get_absolute_url(self):
+        return reverse(self.name, args=[str(self.name)})
