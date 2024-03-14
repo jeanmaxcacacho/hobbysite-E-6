@@ -14,7 +14,7 @@
                 <dt>Description: {{commission.description}} </dt>
             <h3> Comments: </h3>
                 {% for comment in commission.comment.all %}
-                    <p>{{ comment.entry }}, created on {{comment.created_on}}</p>
+                    <p>{{ comment.entry }} <br> Created on {{comment.created_on}}</p>
                 {% endfor %}
                 <br>
             <dt><a href="{% url 'commissions:commission-list' %}">Back to list</a></dt>
