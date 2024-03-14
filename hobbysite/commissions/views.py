@@ -8,7 +8,9 @@ from .models import Commission, Comment
 class CommissionListView(ListView):
     model = Commission
     template_name = 'commissions/commissions_list.html'
+    context_object_name = 'commission'
 
 class CommissionDetailView(DetailView):
     model = Commission
     template_name = 'commissions/commissions_detail.html'
+    context_object_name = 'commission'
