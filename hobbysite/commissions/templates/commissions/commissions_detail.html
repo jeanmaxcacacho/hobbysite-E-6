@@ -8,13 +8,16 @@
         <h1> {{commissions.title}} </h1>
         <dl>
             <h2> Contents </h2>
+                <dt> People Required: {{commission.people_required}} </dt>
                 <dt> Created On: {{commission.created_on}} </dt>
                 <dt> Updated On: {{commission.updated_on}} </dt>
-                <dt> People Required: {{commission.people_required}} </dt>
                 <dt>Description: {{commission.description}} </dt>
             <h3> Comments: </h3>
                 {% for comment in commission.comment.all %}
-                    <p>{{ comment.entry }} <br> Created on {{comment.created_on}}</p>
+                    <p>{{ comment.entry }} 
+                        <br> 
+                        Created on {{comment.created_on}}
+                    </p>
                 {% endfor %}
                 <br>
             <dt><a href="{% url 'commissions:commission-list' %}">Back to list</a></dt>
