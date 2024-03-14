@@ -14,9 +14,9 @@ class Commission(models.Model):
     class Meta: 
         ordering = ['created_on']
 
-class Comment(models.Models):
+class Comment(models.Model):
     entry = models.TextField()
-    created_on = models.DateTimeField(auto_add_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     commission = models.ForeignKey(
         'Commission',
