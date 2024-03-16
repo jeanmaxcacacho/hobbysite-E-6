@@ -10,9 +10,9 @@
         <li>{{ product_type.name }}</li>
 	<p> {{ product_type.description }}</li>
             <ul>
-                {% for product in product_type.products.all %}
-                <li>{{ product.name }}</li>
-                {% endfor %}
+              {% for product in product_type.products.all %}
+              <li><a href="{% url 'merchstore:item_detail' product.pk %}">{{ product.name }}</a></li>
+              {% endfor %}
             </ul>
         {% endfor %}
     </ul>
