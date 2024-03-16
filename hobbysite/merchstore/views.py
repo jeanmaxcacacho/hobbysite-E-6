@@ -27,6 +27,5 @@ class ItemList(ListView):
 
 class ItemDetail(DetailView):
     model = Product
-    template_name = 'merchstore/itemdetail.html'
     context_object_name = 'product'
-    pk_url_kwarg = 'product_id'
+    template_name = 'merchstore/itemdetail.html'
