@@ -1,5 +1,14 @@
 from django.db import models
 # Create your models here.
+
+"""
+so the procedure is going to be:
+1. instantiate product types
+2. instantiate product per product type
+3. test the queries out in shell
+4. setup the templates
+"""
+
 class ProductType(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -8,9 +17,9 @@ class ProductType(models.Model):
     def __str__(self):
         return self.name
 
-    # is this right? lmao
-    def get_absolute_url(self):
-        return reverse(self.name, args=[str(self.name)])
+    
+    class Meta:
+        ordering = ['name']
     
 
 class Product(models.Model):
@@ -18,17 +27,15 @@ class Product(models.Model):
     product_type = models.ForeignKey(
         ProductType,
         null=True,
-        on_delete=models.CASCADE
+        on_delete=models.SET_NULL
         )
     description = models.TextField()
-    # https://stackoverflow.com/questions/23739030/restrict-django-floatfield-to-2-decimal-places
-    # {{ value | floatformat:2 }} when I get around to making the templaes
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
 
     def __str__(self):
         return f"{self.name} -- {self.product_type}"
 
-    # I don't even know what I'm looking at TBH
-    def get_absolute_url(self):
-        return reverse(self.name, args=[str(self.name)})
+
+    class Meta:
+        ordering = ['name']
