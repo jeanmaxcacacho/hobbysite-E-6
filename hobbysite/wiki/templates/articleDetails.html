@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Hobbysite | Online Wiki App{% endblock %}
+
+{% block content %}
+    <h2>Article Detail</h2>
+    <div>
+        <a href="{% url 'article_list' %}">Back to Article List</a>
+        <h3>{{ article.title }}</h3>
+
+        <p>{{ article.entry|linebreaks }}</p>
+    </div>
+{% endblock %}

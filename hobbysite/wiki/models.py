@@ -6,16 +6,16 @@ URLs:
     Detail View: /wiki/article/1
 Models:
 > ArticleCategory
-    > Name - max length is 255 characters
-    > Description - text field
-    Categories should be sorted by name in ascending order
+    > Name - max length is 255 characters ★
+    > Description - text field ★
+    Categories should be sorted by name in ascending order [?]
 > Article
-    > Title - max length is 255 characters
-    > Category - foreign key to ArticleCategory, sets to NULL when deleted
-    > Entry - text field
-    > Created On - datetime field, only gets set when the model is created
-    > Updated On - datetime field, always updates on last model update
-    > Articles should be sorted by the date it was created, in descending order
+    > Title - max length is 255 characters ★
+    > Category - foreign key to ArticleCategory, sets to NULL when deleted ★
+    > Entry - text field ★ 
+    > Created On - datetime field, only gets set when the model is created ★
+    > Updated On - datetime field, always updates on last model update ★
+    > Articles should be sorted by the date it was created, in descending order ★
 '''
 # Create your models here.
 
