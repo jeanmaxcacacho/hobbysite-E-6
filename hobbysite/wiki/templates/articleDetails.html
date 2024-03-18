@@ -6,7 +6,9 @@
     <a href="{% url 'article_list' %}">Back to Article List</a> 
     <h1>Article Detail</h1>
     <div>
+        <hr>
         <h2>{{ article.title }}</h2>
+        <hr>
         <p> <b>Article Created:</b>{{ article.created_on }} </p>
         <p> <b>Article Updated:</b> {{ article.updated_on }} </p>
         <p>{{ article.entry|linebreaks }}</p>
