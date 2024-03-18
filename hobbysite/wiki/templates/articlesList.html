@@ -9,11 +9,13 @@
     <div id="articles">
         <h2>Latest Articles</h2>
             <ul>
-                {% for article in articles %}
-                    <li><a href="{% url 'article_detail' article.pk %}">{{ article.title }} → </a></li>
-                    <i>{{ article.created_on }}</i> 
-                    <br>
-                    <br>
+                {% category in categories %}
+                    {% for article in articles %}
+                        <li><a href="{% url 'article_detail' article.pk %}">{{ article.title }} → </a></li>
+                        <i>{{ article.created_on }}</i> 
+                        <br>
+                        <br>
+                    {% endfor %}
                 {% endfor %}
             </ul>
     </div>
