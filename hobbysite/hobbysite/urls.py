@@ -22,4 +22,5 @@ urlpatterns = [
     path('merchstore/', include('merchstore.urls')), #Max
     path('wiki/', include('wiki.urls')), #Uwie
     #path('blog/', include('blog.urls')), #Paco
+    path('commissions/', include("commissions.urls", namespace="commissions")),
 ]
