@@ -9,8 +9,12 @@
         <h2>Latest Articles</h2>
         <ul>
             {% for article in articles %}
-                <li><a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a></li>
+                <li><a href="{% url 'article_detail' article.pk %}">{{ article.title }} </a></li>
+                {{ article.created_on }} <br><br>
             {% endfor %}
         </ul>
     </div>
+
+    <h3>Add article</h3>
+
 {% endblock %}
