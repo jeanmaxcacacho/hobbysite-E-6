@@ -5,6 +5,9 @@ from .models import Article, ArticleCategory
 Admin User
     username: uwie
     password: admintester1
+
+    username: louisuwie
+    password: admintester_mac
 '''
 
 @admin.register(ArticleCategory)
