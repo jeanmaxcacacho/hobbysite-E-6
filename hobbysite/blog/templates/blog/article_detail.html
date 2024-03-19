@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ article.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ article.name }}</h2>
+    <ul>
+        <li>in {{ article.category }}</li>
+        <li>Created on {{ article.created_on }}, last updated on {{ article.updated_on }}</li>
+    </ul>
+    <p>
+        {{ article.entry }}
+    </p>
+    <a href="{% url 'blog:article-list' %}">Back to articles.</a>
+{% endblock %}
