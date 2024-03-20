@@ -9,5 +9,3 @@ class ArticleCategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ArticleCategory, ArticleCategoryAdmin)
-
-# Register your models here.
