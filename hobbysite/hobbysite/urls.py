@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('merchstore/', include('merchstore.urls')), #Max
     path('wiki/', include('wiki.urls')), #Uwie
-    #path('blog/', include('blog.urls')), #Paco
+    path('blog/', include('blog.urls', namespace="blog")), #Paco
     path('commissions/', include("commissions.urls", namespace="commissions")), #Ysaac
 ]
