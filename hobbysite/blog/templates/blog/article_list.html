@@ -4,11 +4,12 @@
 {% block title %}Hobbysite Blog{% endblock %}
 
 {% block content %}
-    <h2>Blog Articles</h2>
+    <h1>Blog Articles</h1>
+    <p>Please see our blog entries below:</p>
     {% for item in articles %}
         <li>
             <a href="{% url 'blog:article-detail' pk=item.pk %}">
-                {{ item.category }}: {{ item.name }}
+                {{ item.name }}
             </a>
         </li>
     {% endfor %}
