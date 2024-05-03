@@ -9,7 +9,6 @@ from .views import hello_test, ItemList, ItemDetail
 # Detail View: /merchstore/item/1
 
 urlpatterns = [
-    path('hello', hello_test, name='hello_test'),
     path('items', ItemList.as_view(), name='item_list'),
     path('items/<int:pk>/', ItemDetail.as_view(), name='item_detail')
     ]
