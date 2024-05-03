@@ -1,4 +1,4 @@
-from .views import ArticleListView, ArticleDetailView 
+from .views import hello, ArticleListView, ArticleDetailView 
 from django.urls import path
 
 urlpatterns = [
