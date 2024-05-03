@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # required fields of the profile model
 # products bought
