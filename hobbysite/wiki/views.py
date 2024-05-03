@@ -8,7 +8,7 @@ from django.db.models import Exists, OuterRef
 
 class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
-    template_name = 'articlesList.html' 
+    template_name = 'wiki/articlesList.html' 
     context_object_name = 'articles' 
 
     def get_queryset(self):
@@ -31,21 +31,23 @@ class ArticleListView(LoginRequiredMixin, ListView):
 
 class ArticleDetailView(DetailView):
     model = Article
-    template_name = 'articleDetails.html'
+    template_name = 'wiki/articleDetails.html'
     context_object_name = 'article'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         article = self.get_object()
+        
         category = article.category
-        # Get other articles in the same category excluding the current one
         other_articles = Article.objects.filter(category=category).exclude(id=article.id)[:2]
+        
         context['other_articles'] = other_articles
+        
         return context
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
-    template_name = 'articleCreate.html'
+    template_name = 'wiki/articleCreate.html'
     fields = ['title', 'category', 'entry', 'header_image']
     success_url = reverse_lazy('article_list')
 
@@ -70,7 +72,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
-    template_name = 'articleUpdate.html'
+    template_name = 'wiki/articleUpdate.html'
     fields = ['title', 'category', 'entry', 'header_image']
     success_url = reverse_lazy('article_list')
 
