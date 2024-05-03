@@ -2,10 +2,17 @@
 <html lang='en'>
 	<head>
 		<meta charset="UTF-8">
+		{# you don't have to put anything inside the tags guys since you will override them anyway #}
 		<title>{% block title %}{% endblock title %}</title>
 	</head>
 
 	<body>
-		{% block content %}{% endblock content %}
+		<header>
+			{% block header %}{% endblock header %}
+		</header>
+
+		<main>
+			{% block content %}{% endblock content %}
+		</main>
 	</body>
 </html>
