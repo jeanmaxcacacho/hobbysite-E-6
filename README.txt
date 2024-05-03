@@ -4,7 +4,8 @@ Jean Maximus C. Cacacho - jeanmaxcacacho
 Paco Antonio V. Zabala - Pacozabala
 Ysaac Rainier Mesa - Ysaac12
 
-DEADLINE** March 20, 2024 11:59PM
+INTERNAL DEADLINE** May 5, 2024 11:59PM
+ACTUAL DEADLINE** May 8, 2024 11:59 PM
 
 APP DELEGATIONS** 
 Merchandise Store // Max
