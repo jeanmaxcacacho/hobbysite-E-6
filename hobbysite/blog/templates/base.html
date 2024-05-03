@@ -1,0 +1,16 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{% block title %}Hobbysite Blog{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h2>Hobbysite Blog</h2>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
