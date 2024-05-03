@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hobbysite Blog{% endblock %}
+
+{% block content %}
+    <h1>Article List</h1>
+    <p>Please see our blog entries below:</p>
+    {% for item in articles %}
+        <li>
+            <a href="{% url 'blog:article-detail' pk=item.pk %}">
+                {{ item.name }}
+            </a>
+        </li>
+    {% endfor %}
+
+{% endblock %}
