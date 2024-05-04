@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
 from .forms import RegistrationForm
+from .models import Profile
 
 # Create your views here.
 
