@@ -10,5 +10,5 @@ from .forms import ProfileForm
 class ProfileCreateView(CreateView):
     model = Profile
     form_class = ProfileForm
-    template_name = ""
+    template_name = "accounts/register.html"
     success_url = reverse_lazy("login")
