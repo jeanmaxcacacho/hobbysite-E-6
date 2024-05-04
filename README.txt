@@ -1,4 +1,4 @@
-Member & github:
+MEMBER & GITHUB:
 Louis G. Binwag III - louis-uwie 
 Jean Maximus C. Cacacho - jeanmaxcacacho 
 Paco Antonio V. Zabala - Pacozabala
@@ -13,3 +13,7 @@ Commission App // Ysaac
 Online Wiki // Louis
 Blog App // Paco
 
+_=_=_=_=_=_=_=_=
+
+DEPENDENCIES
+Pillow
