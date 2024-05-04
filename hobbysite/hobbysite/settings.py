@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+from django.urls import reverse
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -109,6 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Login/Logout redirects
+
+LOGIN_REDIRECT_URL = 'something'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
