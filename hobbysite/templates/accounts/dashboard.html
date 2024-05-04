@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-<title>Hobbysite Dashboard</title>
+Hobbysite Dashboard
 {% endblock title %}
+
+{% block styles %}
+{% endblock styles %}
 
 {% block header %}
 <h1>Hello {{ profile.user.username }}!<h1>
