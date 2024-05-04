@@ -2,11 +2,20 @@ from django.db import models
 # Create your models here.
 
 """
-so the procedure is going to be:
-1. instantiate product types
-2. instantiate product per product type
-3. test the queries out in shell
-4. setup the templates
+FINALS SPECS
+
+ProductType (same as midterms)
+Product
+ - the midterms fields (name, product type, description, price)
+ - Owner (foreign key to Profile model, on delete model cascade)
+ - stock (integer)
+ - status (character field that can be: available [default], on sale, out of stock [when stock = 0])
+Transaction
+ - buyer (foreign key to profile, on delete null)
+ - product (foreign key to product, on delete null)
+ - amount (integer, amt of the Product bought)
+ - status (character field taht can be: on cart, to pay, to ship, to receive, delivered)
+ - created on (datetime, gets set when model is created)
 """
 
 class ProductType(models.Model):
