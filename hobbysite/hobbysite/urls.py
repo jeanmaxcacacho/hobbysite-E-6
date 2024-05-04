@@ -20,7 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     # admin stuff
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path('accounts/', include('accounts.urls')), -- include this when accounts already has views
+    path('auth/', include('django.contrib.auth.urls')),
 
     # apps
     path('merchstore/', include('merchstore.urls')), 
