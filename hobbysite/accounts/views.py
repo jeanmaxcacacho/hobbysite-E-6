@@ -18,3 +18,13 @@ class UserCreateView(CreateView):
         user = form.save()
         Profile.objects.create(user=user)
         return redirect(self.success_url)
+
+# this view is a placeholder for the dashboard, the dashboard page is what users will be brought to upon login
+def index(request):
+    return render(
+        request,
+        "accounts/dashboard.html",
+        {
+            "Profile": Profile
+        }
+    )
