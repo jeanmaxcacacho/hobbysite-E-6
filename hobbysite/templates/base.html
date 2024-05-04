@@ -8,6 +8,18 @@
 
 	<body>
 		<header>
+			{% if user.is_authenticated %}
+			{# Django has a default url named login included in django.contrib.auth.urls #}
+			{# in our case logging out will lead the user back to the login page #}
+				<form method="POST" action="{% url 'login' %}">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<button type="SUBMIT">Logout</button>
+				</form>
+			{% else %}
+				<a href="{% url 'login' %}">Login</a>
+			{% endif %}
+
 			{% block header %}{% endblock header %}
 		</header>
 
