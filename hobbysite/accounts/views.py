@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .forms import RegistrationForm
 from .models import Profile
@@ -20,11 +21,13 @@ class UserCreateView(CreateView):
         return redirect(self.success_url)
 
 # this view is a placeholder for the dashboard, the dashboard page is what users will be brought to upon login
-def index(request):
+@login_required
+def dashboard(request):
+    profile = request.user.profile
     return render(
         request,
         "accounts/dashboard.html",
         {
-            "Profile": Profile
+            "profile": profile
         }
     )
