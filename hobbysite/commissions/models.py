@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here
 
 class Commission(models.Model):
-    STATUS_CHOICES = [
+    COMMISSION_STATUS=[
         ('O', 'Open'),
         ('F', 'Full'),
         ('C', 'Completed'),
@@ -11,7 +11,7 @@ class Commission(models.Model):
     ]
     title = models.CharField(max_length=2555)
     description = models.TextField(max_length=255)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='O')
+    status = models.CharField(max_length=1, choices=COMMISSION_STATUS, default='O')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -32,13 +32,22 @@ class Job(models.Model):
     def __str__(self):
         return self.role
 
-class Job_Application(models.Model):
-    applied_on=models.DateTimeField(auto_now_add=True),
-    job_application = models.ForeignKey(
+class JobApplication(models.Model):
+    APPLICATION_STATUS=[
+        ('P', 'Pending'),
+        ('A', 'Accepted'),
+        ('R', 'Rejected')
+    ]
+    status=models.CharField(max_length=1, choices=APPLICATION_STATUS, default='P')
+    applied_on=models.DateTimeField(auto_now_add=True)
+    Job = models.ForeignKey(
         'Job',
         on_delete=models.CASCADE,
-        related_name='job_application'
+        related_name='Job'
     )
+
+    def __str__(self):
+        return self.status
 
     
 
