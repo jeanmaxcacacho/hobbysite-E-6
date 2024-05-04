@@ -13,10 +13,10 @@
                 <dt> Updated On: {{commission.updated_on}} </dt>
                 <dt>Description: {{commission.description}} </dt>
             <h3> Comments: </h3>
-                {% for comment in commission.comment.all %}
-                    <p>{{ comment.entry }} 
+                {% for job in commission.job.all %}
+                    <p>{{ job.role }} 
                         <br> 
-                        Created on {{comment.created_on}}
+                        Created on {{job.people_required}}
                     </p>
                 {% endfor %}
                 <br>
