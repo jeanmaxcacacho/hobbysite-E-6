@@ -7,9 +7,9 @@ from .models import Profile
 # Register your models here.
 
 
-class ProfileInLine(admin.StackedInLine):
+class ProfileInLine(admin.StackedInline):
     model = Profile
-    can_delete = false
+    can_delete = False
 
 class UserAdmin(BaseUserAdmin):
     inlines = [ProfileInLine, ]
