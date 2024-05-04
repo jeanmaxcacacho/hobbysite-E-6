@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles', # static files
-    
+
+    'user_management',    
     'accounts',
     'merchstore',
     'wiki',
