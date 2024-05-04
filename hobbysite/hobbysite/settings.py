@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles', # static files
 
-    'user_management',    
-    'accounts',
+    'user_management',
     'merchstore',
     'wiki',
     'commissions',
@@ -114,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Login/Logout redirects
 
-LOGIN_REDIRECT_URL = reverse_lazy("accounts:dashboard")
+LOGIN_REDIRECT_URL = reverse_lazy("user_management:dashboard")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
