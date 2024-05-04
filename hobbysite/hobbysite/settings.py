@@ -38,11 +38,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth', # the login/logout stuff
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles', # static files
     
     'accounts',
     'merchstore',
@@ -129,6 +129,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+STATICFILES_DIRS = [
+    BASE_DIR/'static',
+]
 
 STATIC_URL = 'static/'
 
