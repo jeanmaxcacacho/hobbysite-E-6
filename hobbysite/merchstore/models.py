@@ -35,6 +35,12 @@ class ProductType(models.Model):
     
 
 class Product(models.Model):
+    STATUS_CHOICES = (
+        ('Available', 'Available'),
+        ('On sale', 'On sale'),
+        ('Out of stock', 'Out of stock')
+    )
+
     name = models.CharField(max_length=255)
     product_type = models.ForeignKey(
         ProductType,
@@ -44,10 +50,16 @@ class Product(models.Model):
         )
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    owner = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE
+    )
+    stock = models.PositiveIntegerField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)    
 
 
     def __str__(self):
-        return f"{self.name} -- {self.product_type}"
+        return f"{self.name} -- {self.product_type} -- {self.owner.user.username}"
 
 
     class Meta:
