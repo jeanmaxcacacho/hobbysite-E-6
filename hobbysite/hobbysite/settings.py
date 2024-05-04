@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 load_dotenv()
 
@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Login/Logout redirects
 
-LOGIN_REDIRECT_URL = 'something'
+LOGIN_REDIRECT_URL = reverse_lazy("accounts:dashboard")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
