@@ -40,10 +40,15 @@ class JobApplication(models.Model):
     ]
     status=models.CharField(max_length=1, choices=APPLICATION_STATUS, default='P')
     applied_on=models.DateTimeField(auto_now_add=True)
-    Job = models.ForeignKey(
+    applicant=models.ForeignKey(
+        'accounts.Profile',
+        on_delete=models.CASCADE,
+        related_name='applicant'
+    )
+    job = models.ForeignKey(
         'Job',
         on_delete=models.CASCADE,
-        related_name='Job'
+        related_name='job'
     )
 
     def __str__(self):
