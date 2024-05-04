@@ -1,5 +1,10 @@
 """
-merchstore URLs
+ProductListView: /merchstore/items
+ProductDetailView: /merchstore/item/<int:pk>
+ProductCreateView: /merchstore/item/add
+ProductUpdateView: /merchstore/item/<int:pk>/edit
+CartView: /merchstore/cart
+TransactionView: /merchstore/transactions
 """
 
 from django.urls import path
