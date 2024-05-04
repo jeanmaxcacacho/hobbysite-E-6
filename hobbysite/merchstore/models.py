@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils import timezone
+
+from user_management.models import Profile
 # Create your models here.
 
 """
@@ -49,3 +52,27 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['name']
+
+
+class Transaction(models.Model):
+    STATUS_CHOICES = (
+        ('On cart', 'On cart'),
+        ('To pay', 'To pay'),
+        ('To ship', 'To ship'),
+        ('To receive', 'To receive'),
+        ('Delivered', 'Delivered')
+    )
+
+    buyer = models.ForeignKey(
+        Profile,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    amount = models.PositiveIntegerField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    created_on = models.DateTimeField(default=timezone.now)
