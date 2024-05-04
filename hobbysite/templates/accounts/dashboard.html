@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang='en'>
-	<head>
-		<meta charset="UTF-8">
-	</head>
+{% extends 'base.html' %}
 
-	<body>
-		<header>
-			<h1>Hello {{ profile.user.username }}!</h1>
-		</header>
+{% block title %}
+<title>Hobbysite Dashboard</title>
+{% endblock title %}
 
-		<main>
-		</main>
-	</body>
-</html>
+{% block header %}
+<h1>Hello {{ profile.user.username }}!<h1>
+{% endblock header %}
