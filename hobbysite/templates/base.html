@@ -4,9 +4,7 @@
 <html lang='en'>
 	<head>
 		<meta charset="UTF-8">
-
-		{# you don't have to put anything inside the tags guys since you will override them anyway #}
-		{% block title %}{% endblock title %}
+		<title>{% block title %}{% endblock title %}</title>
 
 		{# this/these is/are the main parent style/styles #}
 		{# Schrodinger's grammar btw #}
@@ -19,11 +17,11 @@
 	<body>
 		<header>
 			{% if user.is_authenticated %}
-			{# Django has a default url named login included in django.contrib.auth.urls #}
-			{# in our case logging out will lead the user back to the login page #}
+				{# Django has a default url named login included in django.contrib.auth.urls #}
+				{# in our case logging out will lead the user back to the login page #}
 				<form method="POST" action="{% url 'login' %}">
 					{% csrf_token %}
-					{{ form.as_p }}
+					{{ login_form.as_p }} {# Change form to login_form here #}
 					<button type="SUBMIT">Logout</button>
 				</form>
 			{% else %}
