@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from user_management.models import Profile
 
 class ArticleCategory(models.Model):
@@ -36,6 +37,9 @@ class Article(models.Model):
     def __str__(self):
         return self.name
     
+    def get_absolute_url(self):
+        return reverse(self.name, args=[str(self.name)])
+    
 class Comment(models.Model):
     author = models.ForeignKey(
         Profile,
@@ -54,3 +58,6 @@ class Comment(models.Model):
     updated_on=models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['created_on']
+
+    def __str__(self):
+        return self.entry

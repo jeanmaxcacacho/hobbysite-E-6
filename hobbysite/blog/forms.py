@@ -6,12 +6,12 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = '__all__'
 
-        def __init__(self, *args, **kwargs):
-            super(ArticleForm, self).__init__(*args, **kwargs)
-        
-            disabled_fields = ['author']
-            for field_name in disabled_fields:
-                self.fields[field_name].disabled = True
+    def __init__(self, *args, **kwargs):
+        super(ArticleForm, self).__init__(*args, **kwargs)
+    
+        disabled_fields = ['author']
+        for field_name in disabled_fields:
+            self.fields[field_name].disabled = True
 
 class CommentForm(forms.ModelForm):
     class Meta:
