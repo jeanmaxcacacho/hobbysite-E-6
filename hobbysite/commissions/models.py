@@ -33,7 +33,7 @@ class Job(models.Model):
     commission = models.ForeignKey(
         'Commission',
         on_delete=models.CASCADE,
-        related_name='commission'
+        related_name='jobs'
     )
 
     def __str__(self):
@@ -50,19 +50,13 @@ class JobApplication(models.Model):
     applicant=models.ForeignKey(
         'accounts.Profile',
         on_delete=models.CASCADE,
-        related_name='applicant'
+        related_name='job'
     )
     job = models.ForeignKey(
         'Job',
         on_delete=models.CASCADE,
-        related_name='job'
+        related_name='applicant'
     )
 
     def __str__(self):
         return self.status
-    
-
-
-    
-
-
