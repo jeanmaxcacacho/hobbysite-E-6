@@ -122,3 +122,24 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         else:
             product.status = 'Available'
         return super().form_valid(form)
+    
+
+class CartView(LoginRequiredMixin, ListView):
+    model = Transaction
+    template_name = "merchstore/cart_view.html"
+    context_object_name = "transactions"
+
+    def get_queryset(self):
+        return Transaction.objects.filter(buyer=self.request.user.profile)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        transactions = context["transactions"]
+        grouped_transactions = {}
+        for transaction in transactions:
+            owner = transaction.product.owner
+            if owner not in grouped_transactions:
+                grouped_transactions[owner] = []
+            grouped_transactions[owner].append(transaction)
+        context["grouped_transactions"] = grouped_transactions
+        return context
