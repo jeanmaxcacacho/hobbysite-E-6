@@ -25,6 +25,7 @@ urlpatterns = [
 
     path('accounts/', include('user_management.urls')),
     path('auth/', include('django.contrib.auth.urls')),
+    path("", include("homepage.urls")),
 
     # apps
     path('merchstore/', include('merchstore.urls')), 
