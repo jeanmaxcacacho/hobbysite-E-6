@@ -8,7 +8,7 @@ TransactionView: /merchstore/transactions
 """
 
 from django.urls import path
-from .views import ItemList, ItemDetail
+from .views import ProductListView, ItemDetail
 
 # List View: /merchstore/items
 # Detail View: /merchstore/item/1
@@ -16,7 +16,7 @@ from .views import ItemList, ItemDetail
 app_name = 'merchstore'
 
 urlpatterns = [
-    path('items', ItemList.as_view(), name='product_list'),
+    path('items', ProductListView.as_view(), name='product_list'),
     path('items/<int:pk>/', ItemDetail.as_view(), name='product_detail')
     ]
 
