@@ -56,7 +56,7 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'merchstore/itemdetail.html'
+    template_name = 'merchstore/product_detail.html'
     context_object_name = 'product'
     form_class = TransactionForm
 
