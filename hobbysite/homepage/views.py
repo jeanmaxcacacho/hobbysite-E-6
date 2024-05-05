@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
+from user_management.models import Profile
 
 # Create your views here.
 
@@ -13,10 +14,13 @@ def homepage_test(request):
 
 @login_required
 def homepage(request):
+    user = request.user
+    profile = get_object_or_404(Profile, user=user)
     return render(
         request,
         "homepage/home.html",
         {
-            "user": request.user
+            "user": user,
+            "profile": profile
         }
     )
