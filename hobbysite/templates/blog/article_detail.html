@@ -28,5 +28,6 @@
     {% for c in article.comment.all() %}
         <p>{{ c.author }}</p>
         <p>{{ c.entry }}</p>
+        <hr />
     {% endfor %}
 {% endblock %}
