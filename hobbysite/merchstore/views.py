@@ -45,7 +45,7 @@ TransactionListView
 - only accessible to logged in users
 """
 
-class ItemList(ListView):
+class ProductListView(ListView):
     template_name = 'merchstore/itemlist.html'
     context_object_name = 'product_types'
     queryset = ProductType.objects.prefetch_related('products')
