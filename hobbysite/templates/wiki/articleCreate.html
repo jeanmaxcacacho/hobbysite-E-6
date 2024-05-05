@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Hobbysite | Online Wiki App - Create New Article{% endblock title %}
+
+{% block content %}
+<h1>Create New Article</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label for="id_title">Title:</label><br>
+    {{ form.title }}<br><br>
+    
+    <label for="id_category">Category:</label><br>
+    {{ form.category }}<br><br>
+    
+    <label for="id_entry">Entry:</label><br>
+    {{ form.entry }}<br><br>
+    
+    <label for="id_header_image">Header Image:</label><br>
+    {{ form.header_image }}<br><br>
+    
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

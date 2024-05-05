@@ -45,6 +45,8 @@ class ArticleDetailView(DetailView):
         
         return context
 
+from django.shortcuts import redirect
+
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     template_name = 'wiki/articleCreate.html'
@@ -55,20 +57,6 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['author'] = self.request.user
-        return initial
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.fields['category'].queryset = ArticleCategory.objects.all()
-        return form
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['create'] = True
-        return context
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
