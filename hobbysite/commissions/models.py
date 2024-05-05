@@ -20,9 +20,16 @@ class Commission(models.Model):
     class Meta: 
         ordering = ['created_on']
 
+    
+
 class Job(models.Model):
+    JOB_STATUS = [
+        ('O', 'Open'),
+        ('F', 'Full')
+    ]
     role = models.TextField()
     people_required = models.IntegerField()
+    status = models.CharField(max_length=1,choices=JOB_STATUS,default='O')
     commission = models.ForeignKey(
         'Commission',
         on_delete=models.CASCADE,
@@ -53,6 +60,8 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return self.status
+    
+
 
     
 
