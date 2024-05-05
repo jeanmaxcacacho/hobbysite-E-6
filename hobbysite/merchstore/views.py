@@ -1,11 +1,11 @@
 from typing import Any
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from .models import ProductType, Product, Transaction
-from .forms import TransactionForm, ProductForm
+from .forms import TransactionForm, ProductForm, ProductUpdateForm
 
 # Create your views here.
 
@@ -105,4 +105,20 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user.profile
+        return super().form_valid(form)
+    
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductUpdateForm
+    template_name = "merchstore/product_update.html"
+    success_url = reverse_lazy("somewhere")
+
+
+    def form_valid(self, form):
+        product = form.insatnce
+        if product.stock == 0:
+            product.status = 'Out of stock'
+        else:
+            product.status = 'Available'
         return super().form_valid(form)
