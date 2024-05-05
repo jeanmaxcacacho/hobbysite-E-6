@@ -10,5 +10,23 @@
         Created on {{ article.created_on }}, last updated on {{ article.updated_on }}
     </p>
     <p>{{ article.entry }}</p>
+    
+    <h2>Other Articles by {{ article.author }}</h2>
+    {% for a in Article.objects.filter(author=article.author).exclude(pk=article.pk) %}
+        <a href="{{ a.get_absolute_url() }}">{{ a.name }}</a>
+    {% endfor %}
     <a href="{% url 'blog:article-list' %}">Back to articles list</a>
+    
+    <h2>Comments</h2>
+    {% if user.is_authenticated %}
+        <p>Post a comment</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% for c in article.comment.all() %}
+        <p>{{ c.author }}</p>
+        <p>{{ c.entry }}</p>
+    {% endfor %}
 {% endblock %}
