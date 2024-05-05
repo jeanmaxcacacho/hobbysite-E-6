@@ -17,6 +17,6 @@ app_name = 'merchstore'
 
 urlpatterns = [
     path('items', ProductListView.as_view(), name='product_list'),
-    path('items/<int:pk>/', ProductDetailView.as_view(), name='product_detail')
+    path('item/<int:pk>/', ProductDetailView.as_view(), name='product_detail')
     ]
 
