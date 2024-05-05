@@ -5,6 +5,7 @@ from .models import Product, ProductType, Transaction
 class TransactionForm(forms.ModelForm):
     quantity = forms.IntegerField(min_value=1, label="quantity")
 
+
     class Meta:
         model = Transaction
         fields = ["quantity"]
