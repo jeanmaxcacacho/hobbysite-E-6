@@ -1,23 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}Hobbysite | Online Wiki App{% endblock %}
+{% block title %}Hobbysite | Online Wiki App{% endblock title %}
 
 {% block content %}
 
-    <h1>Welcome to the Wiki App</h1>
+<h1>Welcome to the Wiki App</h1>
 
-    <div id="articles">
-        <h2>Latest Articles</h2>
-            <ul>
-                
-                    {% for article in articles %}
-                        <li><a href="{% url 'article_detail' article.pk %}">{{ article.title }} → </a></li>
-                        <i>{{ article.created_on }}</i> 
-                        <br>
-                        <br>
-                    {% endfor %}
-                
-            </ul>
-    </div>
+<div id="user-info">
+    <b>Logged in:</b> {{ request.user }} <br>
+</div>
+
+<div id="create-article">
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'article_add' %}">Create New Article</a></p>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to create a new article.</p>
+    {% endif %}
+</div>
+
+<div id="articles">
+    <h2>Latest Articles</h2>
+    <ul>
+        {% for article in articles %}
+        <li><a href="{% url 'article_detail' article.pk %}">{{ article.title }} → </a></li>
+        <i>{{ article.created_on }}</i> 
+        <br>
+        <br>
+        {% endfor %}
+    </ul>
+</div>
 
 {% endblock %}
