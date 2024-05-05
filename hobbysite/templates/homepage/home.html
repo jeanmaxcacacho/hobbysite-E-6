@@ -1,1 +1,32 @@
 {% extends 'base.html' %}
+
+{% block title %}
+<title>Hobbysite Home</title>
+{% endblock title %}
+
+
+{% block styles %}
+<!-- for when Max learns bootstrap -->
+{% endblock styles %}
+
+
+{% block header %}
+{% if user.is_authenticated %}
+<h1>Hello {{ user.username }}!</h1>
+{% else %}
+<h1>Hello stranger!</h1>
+{% endif %}
+{% endblock header %}
+
+
+{% block content %}
+<h2>So what do you want to do today?</h2>
+<ul>
+    <li><a href="{% url 'merchstore:product_list' %}">
+        Hobbysite Store
+    </a></li>
+    <li><a href="{% url 'wiki:article_list' %}">
+        Hobbysite Wiki
+    </a></li>
+</ul>
+{% endblock content %}
