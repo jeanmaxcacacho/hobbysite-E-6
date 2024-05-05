@@ -21,3 +21,14 @@ class ProductForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["product_type"].queryset = ProductType.objects.all()
         self.fields["owner"].widget = forms.HiddenInput()
+
+
+class ProductUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        exclude = ["owner"]
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["status"].widget = forms.HiddenInput()
