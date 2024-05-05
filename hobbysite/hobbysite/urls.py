@@ -16,11 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # admin stuff
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
+    # path('accounts/', include('accounts.urls')),
+    path('accounts/', include('user_management.urls')),
     path('auth/', include('django.contrib.auth.urls')),
 
     # apps
@@ -29,3 +32,6 @@ urlpatterns = [
     path('blog/', include('blog.urls', namespace="blog")), 
     path('commissions/', include("commissions.urls", namespace="commissions"))
 ]
+
+# user uploaded stuff / basically what we use Pillow for
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
