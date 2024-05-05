@@ -18,6 +18,10 @@
 
             <h2>{{ article.title }}</h2>
 
+            {% if article.header_image %}
+            <img src="{{ article.header_image.url }}" alt="{{ article.title }} Image">
+            {% endif %}
+
                 <p>
                     <b>Author:</b> {{ article.author.username }} <br>
                     <b>Article Created:</b> {{ article.created_on }} <br>

@@ -18,10 +18,10 @@ class Article(models.Model):
     entry = models.TextField()
     created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(auto_now=True)
-    header_image = models.ImageField(upload_to='wiki/article_headers/', blank=True, null=True)
+    header_image = models.ImageField(upload_to='media\wiki', blank=True, null=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='articles')
 
-    fields = ['title', 'category', 'entry', 'header_image']
+    
     class Meta:
         ordering = ['-created_on']
 

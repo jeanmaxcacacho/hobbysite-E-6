@@ -50,7 +50,7 @@ class ArticleDetailView(DetailView):
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     template_name = 'wiki/articleCreate.html'
-    fields = Article.fields
+    fields = ['title', 'category', 'entry', 'header_image']
     success_url = reverse_lazy('article_list')
     
     def get_context_data(self, **kwargs):
