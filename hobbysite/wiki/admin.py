@@ -9,6 +9,10 @@ Admin User
 
     username: louisuwie
     password: admintester_mac
+    
+Test User
+    username: louis
+    password: usertester1
 '''
 
 @admin.register(ArticleCategory)
