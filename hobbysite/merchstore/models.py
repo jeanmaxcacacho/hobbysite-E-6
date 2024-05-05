@@ -55,7 +55,8 @@ class Product(models.Model):
         on_delete=models.CASCADE
     )
     stock = models.PositiveIntegerField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    image = models.ImageField(upload_to='merchstore_products/', null=True, blank=True)    
 
 
     class Meta:
