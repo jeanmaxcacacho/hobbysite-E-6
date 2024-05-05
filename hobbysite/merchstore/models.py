@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from user_management.models import Profile
+
 # Create your models here.
 
 """
@@ -88,3 +89,7 @@ class Transaction(models.Model):
     amount = models.PositiveIntegerField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     created_on = models.DateTimeField(default=timezone.now)
+
+
+    def __str__(self):
+        return f"{self.product.name} -- {self.buyer.user.username} -- [TRANSACTION]"
