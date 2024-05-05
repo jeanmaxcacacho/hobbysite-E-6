@@ -9,13 +9,13 @@ from .models import ProductType, Product
 # Detail View: /merchstore/item/1
 
 """
-ProductListView
+ProductListView (DONE)
 - list all products in the system regardless of status
 - when logged in, products by the logged in user in a separate group and removed from all products list
  - so it's there's two lists if somebody is logged in
 - there should be a link that leads to product creation (listing something in the store)
 
-ProductDetailView
+ProductDetailView  (what I'm working on rn)
 - user are not allowed to purchase their own products (so I guess get the same query as the one in ProductListView)
 - form rendered here that is attached to the transaction model
  - form should be handled by this view also
