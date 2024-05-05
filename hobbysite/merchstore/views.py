@@ -115,7 +115,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
     def form_valid(self, form):
-        product = form.insatnce
+        product = form.instance
         if product.stock == 0:
             product.status = 'Out of stock'
         else:
