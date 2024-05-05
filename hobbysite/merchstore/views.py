@@ -143,3 +143,24 @@ class CartView(LoginRequiredMixin, ListView):
             grouped_transactions[owner].append(transaction)
         context["grouped_transactions"] = grouped_transactions
         return context
+    
+
+class TransactionListView(LoginRequiredMixin, ListView):
+    model = Transaction
+    template_name = 'transaction_list.html'
+    context_object_name = 'transactions'
+
+    def get_queryset(self):
+        return Transaction.objects.filter(product__owner=self.request.user.profile)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        transactions = context['transactions']
+        grouped_transactions = {}
+        for transaction in transactions:
+            buyer = transaction.buyer.user.username
+            if buyer not in grouped_transactions:
+                grouped_transactions[buyer] = []
+            grouped_transactions[buyer].append(transaction)
+        context['grouped_transactions'] = grouped_transactions
+        return context
