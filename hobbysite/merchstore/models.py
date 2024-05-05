@@ -25,14 +25,13 @@ Transaction
 class ProductType(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
+    
+    class Meta:
+        ordering = ['name']
 
 
     def __str__(self):
         return self.name
-
-    
-    class Meta:
-        ordering = ['name']
     
 
 class Product(models.Model):
@@ -59,12 +58,12 @@ class Product(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)    
 
 
-    def __str__(self):
-        return f"{self.name} -- {self.product_type} -- {self.owner.user.username}"
-
-
     class Meta:
         ordering = ['name']
+
+
+    def __str__(self):
+        return f"{self.name} -- {self.product_type} -- {self.owner.user.username}"
 
 
 class Transaction(models.Model):
