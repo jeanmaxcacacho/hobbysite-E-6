@@ -16,7 +16,7 @@ from .views import ItemList, ItemDetail
 app_name = 'merchstore'
 
 urlpatterns = [
-    path('items', ItemList.as_view(), name='item_list'),
-    path('items/<int:pk>/', ItemDetail.as_view(), name='item_detail')
+    path('items', ItemList.as_view(), name='product_list'),
+    path('items/<int:pk>/', ItemDetail.as_view(), name='product_detail')
     ]
 
