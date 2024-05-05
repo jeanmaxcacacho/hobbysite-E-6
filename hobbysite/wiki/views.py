@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from .models import Article, ArticleCategory, Comment
 from django.db.models import Exists, OuterRef
 
+
+
 class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = 'wiki/articlesList.html' 
@@ -37,25 +39,29 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         article = self.get_object()
-        
         category = article.category
         other_articles = Article.objects.filter(category=category).exclude(id=article.id)[:2]
-        
         context['other_articles'] = other_articles
-        
+
         return context
 
-from django.shortcuts import redirect
+
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     template_name = 'wiki/articleCreate.html'
-    fields = ['title', 'category', 'entry', 'header_image']
+    fields = Article.fields
     success_url = reverse_lazy('article_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ArticleCategory.objects.all()  # Add this line to pass categories to the template
+        return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
 
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
@@ -80,5 +86,4 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
         return initial
 
     def form_valid(self, form):
-        form.instance.updated_on = timezone.now()
         return super().form_valid(form)

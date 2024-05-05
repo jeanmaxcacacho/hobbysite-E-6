@@ -2,41 +2,55 @@
 
 {% block title %}Hobbysite | Online Wiki App{% endblock %}
 
-{% block content %}
+    {% block content %}
 
-<a href="{% url 'article_list' %}">← Back to Article List</a> 
-<h1>Article Detail</h1>
+    <a href="{% url 'article_list' %}">← Back to Article List</a> 
 
-<div>
+        <div id="user-info">
+            <p><b>Logged in:</b> {{ request.user }} <br></p>
+        </div>
 
-    <hr>
 
-    <h2>{{ article.title }}</h2>
+    <h1>Article Detail</h1>
 
-        <p>
-            <b>Author:</b> {{ article.author.username }} <br>
-            <b>Article Created:</b> {{ article.created_on }} <br>
-            <b>Article Updated:</b> {{ article.updated_on }}
-        </p>
+        <div>
+            <hr>
 
-    <hr>
+            <h2>{{ article.title }}</h2>
 
-    <p>{{ article.entry|linebreaks }}</p>
-</div>
+                <p>
+                    <b>Author:</b> {{ article.author.username }} <br>
+                    <b>Article Created:</b> {{ article.created_on }} <br>
+                    <b>Article Updated:</b> {{ article.updated_on }}
+                </p>
 
-{% if article.comments.all %}
-<div>
-    <h2>Comments</h2>
-    {% for comment in article.comments.all %}
-    <div>
-        <p><i>{{ comment.entry }}</i> <br>
-            By {{ comment.author.username }} on {{ comment.created_on }}</p>
-    </div>
-    <hr>
-    {% endfor %}
-</div>
-{% else %}
-<p>No comments yet.</p>
-{% endif %}
+            <hr>
 
-{% endblock %}
+            <p>{{ article.entry|linebreaks }}</p>
+        </div>
+
+    {% if user.is_authenticated and user == article.author %}
+        <a href="{% url 'article_edit' article.pk %}">Edit</a>
+    {% endif %}
+
+    {% if article.comments.all %}
+        <div>
+            <h2>Comments</h2>
+            {% for comment in article.comments.all %}
+
+            <div>
+                <p><i>{{ comment.entry }}</i> <br>
+                    By {{ comment.author.username }} on {{ comment.created_on }}</p>
+                    Edited last on {{ comment.updated_on }}
+            </div>
+
+            <hr>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <p>No comments yet.</p>
+
+    {% endif %}
+
+    {% endblock %}
