@@ -16,7 +16,6 @@ class CommissionListView(ListView):
     template_name = 'commissions/commissions_list.html'
     context_object_name = 'commissions'
     
-
 class CommissionDetailView(LoginRequiredMixin, DetailView):
     model = Commission
     template_name = 'commissions/commissions_detail.html'

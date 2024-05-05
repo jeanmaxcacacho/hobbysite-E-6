@@ -8,11 +8,12 @@
             <h2>Contents</h2>
             <dt>Commission Description: {{ commission.description }}</dt>
             <h3>Jobs</h3>
-            {% for job in commission.commission.all %}
+            {% for job in commission.jobs.all %}
                     <p>
                         Role: {{ job.role }}<br>
                         Manpower Required: {{ job.people_required }} <br>
-                        Status: {{job.get_status_display}}
+                        Status: {{job.get_status_display}} <br>
+                        Available Slots: {{total_manpower_required}}
                     </p>
             {% endfor %}
             <br>
