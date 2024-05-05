@@ -46,7 +46,7 @@ TransactionListView
 """
 
 class ProductListView(ListView):
-    template_name = 'merchstore/itemlist.html'
+    template_name = 'merchstore/product_list.html'
     context_object_name = 'product_types'
     queryset = ProductType.objects.prefetch_related('products')
 
