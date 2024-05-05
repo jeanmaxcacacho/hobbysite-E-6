@@ -19,6 +19,7 @@ class Article(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(auto_now=True)
     header_image = models.ImageField(upload_to='wiki/article_headers/', blank=True, null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='articles')
 
     class Meta:
         ordering = ['-created_on']
