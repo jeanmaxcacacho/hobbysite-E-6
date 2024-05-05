@@ -1,26 +1,3 @@
-<!--
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Product List</title>
-</head>
-<body>
-    <h1>Product List</h1>
-        {% for product_type in product_types %}
-        <h3>{{ product_type.name }}</h2>
-	<p><strong>{{ product_type.description }}</strong></p>
-            <ul>
-              {% for product in product_type.products.all %}
-              <li><a href="{% url 'merchstore:item_detail' product.pk %}">{{ product.name }}</a></li>
-              {% endfor %}
-            </ul>
-        {% endfor %}
-</body>
-</html>
-
--->
-
 {% load static %}
 
 {% extends 'base.html' %}
