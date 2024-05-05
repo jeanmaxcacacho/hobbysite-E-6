@@ -60,10 +60,12 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
     form_class = TransactionForm
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class
         return context
+
     
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -80,12 +82,14 @@ class ProductDetailView(DetailView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
         
     def form_valid(self, form):
         if self.request.user.is_authenticated:
             return redirect("merchstore:cart")
         else:
             return redirect(reverse_lazy("login"))
+
         
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
