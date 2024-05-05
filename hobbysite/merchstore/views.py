@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from typing import Any
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
 
-from .models import ProductType, Product
+from .models import ProductType, Product, Transaction
+from .forms import TransactionForm
 
 # Create your views here.
 
@@ -16,7 +19,7 @@ ProductListView (DONE)
 - there should be a link that leads to product creation (listing something in the store)
 
 ProductDetailView  (what I'm working on rn)
-- user are not allowed to purchase their own products (so I guess get the same query as the one in ProductListView)
+- user are not allowed to purchase their own products (we're gonna have an if user.is_authenticated view)
 - form rendered here that is attached to the transaction model
  - form should be handled by this view also
 - product stock should change accordingly
@@ -53,5 +56,36 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    context_object_name = 'product'
     template_name = 'merchstore/itemdetail.html'
+    context_object_name = 'product'
+    form_class = TransactionForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            product = self.get_object()
+            transaction = form.save(commit=False)
+            transaction.product = product
+            transaction.buyer = request.user
+            transaction.save()
+
+            # udpating product stock
+            product.stock -= transaction.quantity
+            product.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+        
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            return redirect("merchstore:cart")
+        else:
+            return redirect(reverse_lazy("login"))
+        
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
