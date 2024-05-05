@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles', # static files
 
+    # across apps
     'user_management',
+    'homepage',
+
+    # our indiv apps
     'merchstore',
     'wiki',
     'commissions',
