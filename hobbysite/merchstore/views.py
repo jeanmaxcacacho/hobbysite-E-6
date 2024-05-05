@@ -1,10 +1,11 @@
 from typing import Any
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from .models import ProductType, Product, Transaction
-from .forms import TransactionForm
+from .forms import TransactionForm, ProductForm
 
 # Create your views here.
 
@@ -49,14 +50,14 @@ TransactionListView
 """
 
 class ProductListView(ListView):
-    template_name = 'merchstore/product_list.html'
+    template_name = "merchstore/product_list.html"
     context_object_name = 'product_types'
     queryset = ProductType.objects.prefetch_related('products')
 
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'merchstore/product_detail.html'
+    template_name = "merchstore/product_detail.html"
     context_object_name = 'product'
     form_class = TransactionForm
 
@@ -93,3 +94,15 @@ class ProductDetailView(DetailView):
         
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
+    
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = "merchstore/product_create.html"
+    success_url = reverse_lazy("somewhere")
+
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user.profile
+        return super().form_valid(form)
