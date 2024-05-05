@@ -117,7 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Login/Logout redirects
 
-LOGIN_REDIRECT_URL = reverse_lazy("user_management:dashboard")
+LOGIN_REDIRECT_URL = reverse_lazy("homepage:home")
+LOGOUT_REDIRECT_URL = reverse_lazy("homepage:home")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
