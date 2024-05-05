@@ -1,7 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponse
-
-from django.contrib.auth.models import User
 
 from user_management.models import Profile
 
@@ -13,7 +11,9 @@ def homepage_test(request):
 
 def homepage(request):
     user = request.user
-    profile = get_object_or_404(Profile, user=user)
+    profile = None
+    if user.is_authenticated:
+        profile = Profile.objects.filter(user=user).first()
     return render(
         request,
         "homepage/home.html",
