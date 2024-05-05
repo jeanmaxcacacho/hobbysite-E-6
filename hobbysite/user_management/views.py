@@ -17,6 +17,15 @@ class UserCreateView(CreateView):
         user = form.save()
         Profile.objects.create(user=user)
         return redirect(self.success_url)
+    
+
+"""
+TESTING ACCOUNTS:
+
+Max
+username: maxcacacho
+password: omegafucker123
+"""
 
 
 # dashboard placeholder
