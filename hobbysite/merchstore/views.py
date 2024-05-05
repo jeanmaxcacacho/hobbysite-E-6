@@ -51,7 +51,7 @@ class ProductListView(ListView):
     queryset = ProductType.objects.prefetch_related('products')
 
 
-class ItemDetail(DetailView):
+class ProductDetailView(DetailView):
     model = Product
     context_object_name = 'product'
     template_name = 'merchstore/itemdetail.html'
