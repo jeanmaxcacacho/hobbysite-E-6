@@ -20,6 +20,7 @@ class Article(models.Model):
         on_delete=models.SET_NULL,
         related_name='article',
         null=True,
+        blank=True,
     )
     category = models.ForeignKey(
         ArticleCategory,
@@ -28,7 +29,7 @@ class Article(models.Model):
         null=True,
     )
     entry = models.TextField()
-    header_image = models.ImageField(upload_to='static/img/', null=True)
+    header_image = models.ImageField(upload_to='static/img/', null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     
