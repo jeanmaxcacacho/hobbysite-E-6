@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
-    {% block title %} Hobbysite | Edit Commission {% endblock %}
 
-    {% block content %}
+{% block title %}
+    <title>Update Commission</title>
+{% endblock title %}
 
-        <h1>Edit Commission</h1>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ commission_form.as_p }} <!-- Render CommissionForm -->
-        
-            <h2>Add Jobs</h2>
-            {{ job_form.as_p }} <!-- Render formset management form -->
-            <h2>Add Job Application</h2>
-            {{ job_application_form.as_p }} <!-- Render each JobForm in the formset -->
-            <button type="submit">Submit</button>
-        </form>
-        
-    {% endblock %}
+{% block header %}
+    <h1>Update Commission</h1>
+{% endblock header %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock content %}
