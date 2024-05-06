@@ -20,6 +20,12 @@
         <li><a href="{{ a.get_absolute_url() }}">{{ a.name }}</a></li>
     {% endfor %}
 
+    {% if user.is_authenticated %}
+        {% if article.author.user == user %}
+            <a href="{% url 'blog:article-update' pk=article.pk %}">
+                Edit this Article
+            </a>
+    <br>
     <a href="{% url 'blog:article-list' %}">Back to articles list</a>
     
     <h2>Comments</h2>
