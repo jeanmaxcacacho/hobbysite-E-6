@@ -4,7 +4,9 @@
 {% block title %}{{ article.name }}{% endblock %}
 
 {% block header %}
-<img src="{{ article.header_image.url }}" alt="">
+{% if article.header_image %}
+    <img src="{{ article.header_image.url }}" alt="">
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -14,23 +16,25 @@
         Created on {{ article.created_on }}, last updated on {{ article.updated_on }}
     </p>
     <p>{{ article.entry }}</p>
-    
-    <!--other articles by author-->
-    <h2>Other Articles by {{ article.author }}</h2>
-    {% for a in article.author.article.exclude(pk=article.pk) %}
-        <li><a href="{{ a.get_absolute_url() }}">{{ a.name }}</a></li>
-    {% endfor %}
 
+    <!--other articles by author-->
+    <h3>Other Articles by {{ article.author }}</h3>
+    {% for a in author_articles %}
+        <li><a href="{% url 'blog:article-detail' pk=a.pk %}">{{ a.name }}</a></li>
+    {% endfor %}
+    <br>
     <!--check if user is author for editing-->
     {% if user.is_authenticated %}
         {% if article.author.user == user %}
             <a href="{% url 'blog:article-update' pk=article.pk %}">
                 Edit this Article
             </a>
+        {% endif %}
+    {% endif %}
     <br>
     <a href="{% url 'blog:article-list' %}">Back to articles list</a>
-    
-    <h2>Comments</h2>
+
+    <h3>Comments</h3>
     {% if user.is_authenticated %}
         <p>Post a comment.</p>
         <form method="post">
@@ -38,11 +42,13 @@
             {{ form }}
             <input type="submit" value="Submit">
         </form>
-    {% for c in article.comment.all() %}
+    {% endif %}
+    {% for c in article.comment.all %}
         <p>
             {{ c.author }}<br>
             {{ c.entry }}<br>
             Posted {{ c.created_on }}
         </p>
     {% endfor %}
+
 {% endblock %}
