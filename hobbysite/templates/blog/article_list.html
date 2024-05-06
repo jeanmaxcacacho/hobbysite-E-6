@@ -9,10 +9,12 @@
     {% for item in articles %}
         <li>
             <a href="{% url 'blog:article-detail' pk=item.pk %}">
-                {{ item.name }} by {{ item.author }}
+                {{ item.name }}
             </a>
+            by {{ item.author }}<br>
+            Last updated {{ item.updated_on }}
         </li>
     {% endfor %}
-    <a href="{% url %}">Write an Article</a>
+    <a href="{% url 'blog:article-create' %}">Write an Article</a>
 
 {% endblock %}

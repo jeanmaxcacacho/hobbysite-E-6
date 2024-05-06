@@ -8,7 +8,7 @@ class CommentInline(admin.TabularInline):
     model = Comment
 
 class ArticleAdmin(admin.ModelAdmin):
-    model = Article
+    inlines = [CommentInline]
 
 class ArticleCategoryAdmin(admin.ModelAdmin):
     inlines = [ArticleInline]
