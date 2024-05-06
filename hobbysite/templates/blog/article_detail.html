@@ -17,9 +17,9 @@
     
     <h2>Other Articles by {{ article.author }}</h2>
     {% for a in article.author.article.all().exclude(pk=article.pk) %}
-        <a href="{{ a.get_absolute_url() }}">{{ a.name }}</a>
+        <li><a href="{{ a.get_absolute_url() }}">{{ a.name }}</a></li>
     {% endfor %}
-    
+
     <a href="{% url 'blog:article-list' %}">Back to articles list</a>
     
     <h2>Comments</h2>
@@ -32,8 +32,9 @@
         </form>
     {% for c in article.comment.all() %}
         <p>
-            {{ c.author }} <br />
-            {{ c.entry }}
+            {{ c.author }}<br>
+            {{ c.entry }}<br>
+            Posted {{ c.created_on }}
         </p>
     {% endfor %}
 {% endblock %}
