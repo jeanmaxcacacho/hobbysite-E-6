@@ -6,7 +6,7 @@
 {% block content %}
     <h1>Article List</h1>
     <p>Please see our blog entries below:</p>
-    {% for item in articles %}
+    {% for item in articles(author=user.profile) %}
         <li>
             <a href="{% url 'blog:article-detail' pk=item.pk %}">
                 {{ item.name }}
