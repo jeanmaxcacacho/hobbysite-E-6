@@ -6,6 +6,16 @@ class CommissionForm(forms.ModelForm):
     class Meta: 
         model = Commission
         fields = "__all__"
+        exclude = ["owner"]
+
+class JobUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["status"].widget = forms.HiddenInput()
 
 class JobForm(forms.ModelForm):
     class Meta: 
@@ -16,8 +26,9 @@ class JobForm(forms.ModelForm):
         }
 
 class JobApplicationForm(forms.ModelForm):
+    qualified = forms.IntegerField(min_value=1)
     class Meta:
         model = JobApplication
-        fields = "__all__"
+        fields = ["qualified"]
 
 
