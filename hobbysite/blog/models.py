@@ -48,12 +48,14 @@ class Comment(models.Model):
         on_delete=models.SET_NULL,
         related_name='comment',
         null=True,
+        blank=True,
     )
     article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,
         related_name='comment',
         null=True,
+        blank=True,
     )
     entry = models.TextField()
     created_on=models.DateTimeField(auto_now_add=True)
