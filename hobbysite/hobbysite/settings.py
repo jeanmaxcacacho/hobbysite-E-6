@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+from django.urls import reverse_lazy
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,13 +38,17 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth', 
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
-    'accounts',
+    'django.contrib.staticfiles', 
+
+    # across apps
+    'user_management',
+    'homepage',
+
+    # our indiv apps
     'merchstore',
     'wiki',
     'commissions',
@@ -109,6 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Login/Logout redirects
+
+LOGIN_REDIRECT_URL = reverse_lazy("homepage:home")
+LOGOUT_REDIRECT_URL = reverse_lazy("homepage:home")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -124,6 +134,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
 
 STATIC_URL = 'static/'
 
