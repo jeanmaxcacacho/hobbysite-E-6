@@ -3,6 +3,10 @@
 
 {% block title %}{{ article.name }}{% endblock %}
 
+{% block header %}
+<img src="{{ article.header_image.url }}" alt="">
+{% endblock %}
+
 {% block content %}
     <h1>{{ article.name }}</h1>
     <p>Category: {{ article.category }}</p>
@@ -12,22 +16,24 @@
     <p>{{ article.entry }}</p>
     
     <h2>Other Articles by {{ article.author }}</h2>
-    {% for a in Article.objects.filter(author=article.author).exclude(pk=article.pk) %}
+    {% for a in article.author.article.all().exclude(pk=article.pk) %}
         <a href="{{ a.get_absolute_url() }}">{{ a.name }}</a>
     {% endfor %}
+    
     <a href="{% url 'blog:article-list' %}">Back to articles list</a>
     
     <h2>Comments</h2>
     {% if user.is_authenticated %}
-        <p>Post a comment</p>
+        <p>Post a comment.</p>
         <form method="post">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit">
         </form>
     {% for c in article.comment.all() %}
-        <p>{{ c.author }}</p>
-        <p>{{ c.entry }}</p>
-        <hr />
+        <p>
+            {{ c.author }} <br />
+            {{ c.entry }}
+        </p>
     {% endfor %}
 {% endblock %}
