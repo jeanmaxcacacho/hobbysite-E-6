@@ -36,7 +36,7 @@ class ArticleDetailView(DetailView):
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
-    template_name = ''
+    template_name = 'blog/article_create.html'
     form_class = ArticleForm
 
     def get_success_url(self):
@@ -49,7 +49,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
-    template_name = ''
+    template_name = 'blog/article_update.html'
     form_class = ArticleForm
 
     def get_success_url(self):
