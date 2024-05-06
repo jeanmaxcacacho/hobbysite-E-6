@@ -1,5 +1,7 @@
 from django.db import models
 
+from user_management.models import Profile
+
 # Create your models here
 
 class Commission(models.Model):
@@ -14,6 +16,11 @@ class Commission(models.Model):
     status = models.CharField(max_length=1, choices=COMMISSION_STATUS, default='O')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name='owner'
+    )
 
     def __str__(self):
         return self.title
@@ -33,7 +40,8 @@ class Job(models.Model):
     commission = models.ForeignKey(
         'Commission',
         on_delete=models.CASCADE,
-        related_name='jobs'
+        related_name='jobs',
+        blank=True
     )
 
     def __str__(self):
@@ -48,7 +56,7 @@ class JobApplication(models.Model):
     status=models.CharField(max_length=1, choices=APPLICATION_STATUS, default='P')
     applied_on=models.DateTimeField(auto_now_add=True)
     applicant=models.ForeignKey(
-        'accounts.Profile',
+        Profile,
         on_delete=models.CASCADE,
         related_name='job'
     )
