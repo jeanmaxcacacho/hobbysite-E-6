@@ -20,13 +20,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    # admin stuff
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+
+    path('accounts/', include('user_management.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
+    path("", include("homepage.urls")),
+
+    # apps
     path('merchstore/', include('merchstore.urls')), 
     path('wiki/', include('wiki.urls')), 
     path('blog/', include('blog.urls', namespace="blog")), 
     path('commissions/', include("commissions.urls", namespace="commissions"))
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# user uploaded stuff / basically what we use Pillow for
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

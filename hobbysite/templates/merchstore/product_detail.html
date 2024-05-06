@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title> {{ product.name }} Detail Page</title>
+{% endblock title %}
+
+{% block header %}
+<h1>{{ product.name }}</h1>
+<ul>
+  <p><li>
+    {{ product.description }}
+  </li></p>
+  <p><li>
+      <p>Price: ₱{{ product.price }}</p>
+  </li></p>
+  <p><li>
+      <p>Stock: ₱{{ product.stock }}</p>
+  </li></p>
+</ul>
+{% endblock header %}
+
+{% block content %}
+{% if product.stock > 0 and user != product.owner.user %}
+  <form method="post" action="{% url 'product_detail' product.pk %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="SUBMIT">Buy</button>
+  </form>
+{% else %}
+  <p>This product is out of stock/you are the owner of this product.</p>
+{% endif %}
+
+<br>
+
+{% if user.is_authenticated and user == product.owner.user %}
+  <a href="{% url 'product_update' product.pk %}">
+    Edit
+  </a>
+{% endif %}
+{% endblock content %}
