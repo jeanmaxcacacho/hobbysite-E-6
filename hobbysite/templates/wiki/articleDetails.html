@@ -4,7 +4,7 @@
 
     {% block content %}
 
-    <a href="{% url 'article_list' %}">← Back to Article List</a> 
+    <a href="{% url 'wiki:article_list' %}">← Back to Article List</a> 
 
         <div id="user-info">
             <p><b>Logged in:</b> {{ request.user }} <br></p>
@@ -34,8 +34,10 @@
         </div>
 
     {% if user.is_authenticated and user == article.author %}
-        <a href="{% url 'article_edit' article.pk %}">Edit</a>
+        <a href="{% url 'wiki:article_edit' article.pk %}">Edit Article</a>
     {% endif %}
+
+
 
     {% if article.comments.all %}
         <div>
@@ -54,7 +56,6 @@
         </div>
     {% else %}
         <p>No comments yet.</p>
-
     {% endif %}
 
     {% endblock %}
