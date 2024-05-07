@@ -36,13 +36,20 @@ class ProductDetailView(DetailView):
             product = self.get_object()
             transaction = form.save(commit=False)
             transaction.product = product
-            transaction.buyer = request.user
-            transaction.save()
+            transaction.buyer = request.user.profile
+            transaction.amount = form.cleaned_data["quantity"]
 
-            # udpating product stock
-            product.stock -= transaction.quantity
-            product.save()
-            return self.form_valid(form)
+
+            if product.stock >= transaction.amount > 0:
+                transaction.save()
+
+                product.stock -= transaction.amount
+                product.save()
+
+                return self.form_valid(form)
+            else:
+                form.add_error(None, "Invalid quantity.")
+                return self.form_invalid(form)
         else:
             return self.form_invalid(form)
 
