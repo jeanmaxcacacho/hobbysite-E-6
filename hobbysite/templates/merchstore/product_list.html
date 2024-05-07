@@ -1,6 +1,6 @@
-{% load static %}
-
 {% extends 'base.html' %}
+
+{% load static %}
 
 {% block title %}
 <title>Hobbysite Merchstore</title>
@@ -20,7 +20,6 @@
 {% block content %}
 {% if user.is_authenticated %}
 <h1>Your Listings</h1>
-<!-- Put products where owner.user.email = user.email -->
 <ul>
     {% for product_type in product_types %}
     <li><strong>
@@ -30,7 +29,7 @@
         {{ product_type.description }}
     </p>
     <ul>
-        {% for product in product_types.products.all %}
+        {% for product in product_type.products.all %}
             {% if product.owner.user.username == user.username %}
             <li>
                 <a href="{% url 'merchstore:product_detail' product.pk %}">
@@ -44,7 +43,6 @@
 </ul>
 <br>
 <h1>Product List</h1>
-<!-- Put all products where owner.user.email != user.email -->
 <ul>
     {% for product_type in product_types %}
     <li><strong>
@@ -54,7 +52,7 @@
         {{ product_type.description }}
     </p>
     <ul>
-        {% for product in product_types.products.all %}
+        {% for product in product_type.products.all %}
             {% if product.owner.user.username != user.username %}
             <li>
                 <a href="{% url 'merchstore:product_detail' product.pk %}">
