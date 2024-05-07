@@ -1,3 +1,4 @@
+from django.forms.models import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +8,7 @@ from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy, reverse
 
 from .models import Commission, Job, JobApplication
-from .forms import CommissionForm, JobForm, JobApplicationForm, JobUpdateForm
+from .forms import CommissionForm, JobForm, JobApplicationForm, CommissionUpdateForm
 
 
 # Create your views here.
@@ -43,8 +44,6 @@ class CommissionDetailView(LoginRequiredMixin, DetailView):
             commission = self.get_object()
             application = form.save(commit=False)
             application.applicant = request.user.profile
-            success_url = reverse_lazy('commissions:commission-list')
-
             jobs = commission.jobs.all()
             total_manpower_required = sum(job.people_required for job in jobs)
             total_signees = sum(job.applicant.count() for job in jobs)
@@ -60,12 +59,13 @@ class CommissionDetailView(LoginRequiredMixin, DetailView):
                 application.applicant_profile = self.request.user.profile
                 application.save()
         return HttpResponseRedirect(reverse('commissions:commission-list'))
+    
     def form_valid(self, form):
         commission = self.get_object()
         job = form.instance
         
         if all(application.status == 'A' for job in commission.jobs.all() for application in job.applicant.all()):
-            job.status = 'F'  # Update job status to 'Full'
+            job.status = 'F'  
             job.save()
         
         if all(job.status == 'F' for job in commission.jobs.all()):
@@ -76,9 +76,32 @@ class CommissionDetailView(LoginRequiredMixin, DetailView):
 
 class CommissionUpdateView(UpdateView):
     model = Commission
-    form_class = JobUpdateForm
+    form_class = CommissionUpdateForm
     template_name = 'commissions/commissions_update.html'
-    success_url = reverse_lazy('commissions:commission-list')
+    success_url = reverse_lazy('commissions:commission-list')       
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        commission = self.get_object()
+        job_instance = commission.jobs.first()
+        if self.request.POST:
+            context['commission_form'] = CommissionForm(self.request.POST, instance=self.object)
+            context['job_form'] = JobForm(self.request.POST, prefix='job',instance=job_instance)
+        else:
+            context['commission_form'] = CommissionForm(instance=self.object)
+            context['job_form'] = JobForm(prefix='job', instance=job_instance)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        job_form = context['job_form']
+
+        if job_form.is_valid():
+            job_instance = job_form.save(commit=False)
+            job_instance.commission = form.instance
+            job_instance.save()
+
+        return super().form_valid(form)
     
 class CommissionCreateView(LoginRequiredMixin, CreateView):
     model = Commission
