@@ -6,7 +6,7 @@
 {% block content %}
     <h1>Write an Article</h1>
     <p>Fill out the fields below:</p>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit">
