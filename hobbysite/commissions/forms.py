@@ -26,9 +26,8 @@ class JobForm(forms.ModelForm):
         }
 
 class JobApplicationForm(forms.ModelForm):
-    qualified = forms.IntegerField(min_value=1)
     class Meta:
         model = JobApplication
-        fields = ["qualified"]
+        fields = ["job"]
 
 
