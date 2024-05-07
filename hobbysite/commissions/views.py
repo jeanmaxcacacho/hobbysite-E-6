@@ -1,14 +1,12 @@
-from django.forms.models import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
-from .models import Commission, Job
+from .models import Commission, Job, JobApplication
 from .forms import CommissionForm, JobForm, JobApplicationForm, JobUpdateForm
 
 
@@ -17,7 +15,7 @@ class CommissionListView(ListView):
     model = Commission
     template_name = 'commissions/commissions_list.html'
     context_object_name = 'commissions'
-    
+
 class CommissionDetailView(LoginRequiredMixin, DetailView):
     model = Commission
     template_name = 'commissions/commissions_detail.html'
@@ -29,7 +27,6 @@ class CommissionDetailView(LoginRequiredMixin, DetailView):
         jobs = commission.jobs.all()
         
         total_manpower_required = sum(job.people_required for job in jobs)
-        
         total_signees = sum(job.applicant.count() for job in jobs)
         approved_signees = sum(job.applicant.filter(status='A').count() for job in commission.jobs.all())
         open_manpower = total_manpower_required - approved_signees
@@ -45,37 +42,43 @@ class CommissionDetailView(LoginRequiredMixin, DetailView):
         if form.is_valid():
             commission = self.get_object()
             application = form.save(commit=False)
-            application.job = commission.jobs.get(pk=request.POST.get('job_id')) 
-            total_manpower_required = sum(job.people_required for job in commission.jobs.all())
-            total_signees = sum(job.applicant.count() for job in commission.jobs.all())
+            application.applicant = request.user.profile
+            success_url = reverse_lazy('commissions:commission-list')
+
+            jobs = commission.jobs.all()
+            total_manpower_required = sum(job.people_required for job in jobs)
+            total_signees = sum(job.applicant.count() for job in jobs)
             approved_signees = sum(job.applicant.filter(status='A').count() for job in commission.jobs.all())
             open_manpower = total_manpower_required - approved_signees
 
             if total_signees < total_manpower_required:
-                application.status = 'P'  
-                application.applicant_profile = self.request.user.profile
+                application.status = 'P'
                 application.save()
-                messages.success(request, 'Application submitted successfully.')
             elif open_manpower == 0:
                 commission.status = 'F'
+                commission.save()
                 application.applicant_profile = self.request.user.profile
                 application.save()
-            else:
-                 messages.success(request, 'Manpower required is Full.')
-        return super().get(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('commissions:commission-list'))
+    def form_valid(self, form):
+        commission = self.get_object()
+        job = form.instance
+        
+        if all(application.status == 'A' for job in commission.jobs.all() for application in job.applicant.all()):
+            job.status = 'F'  # Update job status to 'Full'
+            job.save()
+        
+        if all(job.status == 'F' for job in commission.jobs.all()):
+            commission.status = 'F'
+            commission.save()
+        
+        return super().form_valid(form)
 
 class CommissionUpdateView(UpdateView):
     model = Commission
     form_class = JobUpdateForm
     template_name = 'commissions/commissions_update.html'
     success_url = reverse_lazy('commissions:commission-list')
-    def form_valid(self, form):
-        commission = self.object
-        job = form.instance
-        if job.status == 'F':
-            commission.status = 'F'
-            commission.save()
-        return super().form_valid(form)
     
 class CommissionCreateView(LoginRequiredMixin, CreateView):
     model = Commission
