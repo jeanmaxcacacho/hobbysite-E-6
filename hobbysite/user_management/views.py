@@ -19,16 +19,6 @@ class UserCreateView(CreateView):
         return redirect(self.success_url)
     
 
-"""
-TESTING ACCOUNTS:
-
-Max
-username: maxcacacho
-password: omegafucker123
-"""
-
-
-# dashboard placeholder
 @login_required
 def dashboard(request):
     profile = request.user.profile
