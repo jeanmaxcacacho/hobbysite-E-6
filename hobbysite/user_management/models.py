@@ -12,7 +12,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=100, blank=True)
     display_picture = models.ImageField(
-        upload_to="user_management/display_picture",
+        upload_to="media/user_management/display_picture",
         blank=True,
         null=True
         )
