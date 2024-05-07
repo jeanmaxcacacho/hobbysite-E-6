@@ -74,7 +74,7 @@ class CommissionDetailView(LoginRequiredMixin, DetailView):
         
         return super().form_valid(form)
 
-class CommissionUpdateView(UpdateView):
+class CommissionUpdateView(LoginRequiredMixin, UpdateView):
     model = Commission
     form_class = CommissionUpdateForm
     template_name = 'commissions/commissions_update.html'

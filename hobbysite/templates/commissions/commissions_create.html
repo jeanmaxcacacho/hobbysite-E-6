@@ -3,19 +3,18 @@
 
 {% block content %}
 
-<h1>Add Commissions</h1>
 <form method="post">
     {% csrf_token %}
     
     <!-- Commission Form -->
     <fieldset>
-        <legend>Commission</legend>
+        <legend><h1>Add Commission</h1></legend>
         {{ commission_form.as_p }}
     </fieldset>
   
     <!-- Job Form -->
     <fieldset>
-      <legend>Job</legend>
+      <legend><h1>Add Job</h1></legend>
       {{ job_form.as_p }}
     </fieldset>
 
