@@ -30,7 +30,7 @@
         {{ product_type.description }}
     </p>
     <ul>
-        {% for product in product_types.products.all %}
+        {% for product in product_type.products.all %}
             {% if product.owner.user.username == user.username %}
             <li>
                 <a href="{% url 'merchstore:product_detail' product.pk %}">
