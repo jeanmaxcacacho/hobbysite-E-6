@@ -35,19 +35,26 @@
         <a href="{% url 'wiki:article_edit' article.pk %}">Edit Article</a>
     {% endif %}
 
-    {% if article.comments.all %}
-        <div>
-            <h2>Comments</h2>
-            {% for comment in article.comments.all %}
-                <div>
-                    <p><i>{{ comment.entry }}</i> <br>
-                    By {{ comment.author.username }} on {{ comment.created_on }}</p>
-                    Edited last on {{ comment.updated_on }}
-                </div>
-                <hr>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No comments yet.</p>
-    {% endif %}
+    <div>
+        <h2>Comments</h2>
+        {% for comment in article.comments.all %}
+            <div>
+                <p><i>{{ comment.entry }}</i> <br>
+                By {{ comment.author.username }} on {{ comment.created_on }}</p>
+                Edited last on {{ comment.updated_on }}
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <h2>Add a Comment</h2>
+    <form method="post" action="{% url 'wiki:comment_create' article.pk %}">
+        {% csrf_token %}
+        <textarea name="entry" rows="4" cols="50" placeholder="Enter your comment"></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
 {% endblock %}
