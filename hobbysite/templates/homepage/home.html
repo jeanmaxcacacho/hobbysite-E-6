@@ -13,6 +13,7 @@
 {% block header %}
 {% if user.is_authenticated %}
 <h1>Hello {{ user.username }}!</h1>
+<a href="{% url 'user_management:profile_update' %}">Update Profile</a>
 {% else %}
 <h1>Hello stranger!</h1>
 {% endif %}
