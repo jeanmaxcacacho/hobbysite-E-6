@@ -3,7 +3,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import Article, ArticleCategory
+from .models import Article, ArticleCategory, Comment
 
 
 
@@ -88,3 +88,18 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+    
+    
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    template_name = 'wiki/commentCreate.html'
+    fields = ['entry']  # Assuming 'entry' is the field for the comment content
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.article_id = self.kwargs['article_id']  # Assuming the URL includes 'article_id'
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('wiki:article_detail', kwargs={'pk': self.kwargs['article_id']})
