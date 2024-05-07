@@ -92,4 +92,4 @@ class Transaction(models.Model):
 
 
     def __str__(self):
-        return f"{self.product.name} -- {self.buyer.user.username} -- [TRANSACTION]"
+        return f"{self.product.name} -- {self.buyer.user.username} (buyer) -- {self.product.owner} (seller)"
