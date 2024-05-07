@@ -21,7 +21,7 @@
 
 {% block content %}
 {% if product.stock > 0 and user != product.owner.user %}
-  <form method="post" action="{% url 'product_detail' product.pk %}">
+  <form method="post" action="{% url 'merchstore:product_detail' product.pk %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="SUBMIT">Buy</button>
@@ -33,7 +33,7 @@
 <br>
 
 {% if user.is_authenticated and user == product.owner.user %}
-  <a href="{% url 'product_update' product.pk %}">
+  <a href="{% url 'merchstore:product_update' product.pk %}">
     Edit
   </a>
 {% endif %}
