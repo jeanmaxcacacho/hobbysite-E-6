@@ -4,7 +4,6 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import Article, ArticleCategory, Comment
-from django.db.models import Exists, OuterRef
 
 
 
@@ -15,18 +14,20 @@ class ArticleListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if self.request.user.is_authenticated:
-            queryset = queryset.annotate(
-                has_comments=Exists(
-                    Comment.objects.filter(article_id=OuterRef('pk'), author=self.request.user)
-                )
-            )
+        user = self.request.user
+        if user.is_authenticated:
+            user_articles = queryset.filter(author=user)
+            other_articles = queryset.exclude(author=user)
+            queryset = {'user_articles': user_articles, 'other_articles': other_articles}
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        categories = ArticleCategory.objects.all()
-        context['categories'] = categories
+        if isinstance(context['object_list'], dict):
+            context['user_articles'] = context['object_list']['user_articles']
+            context['other_articles'] = context['object_list']['other_articles']
+        else:
+            context['other_articles'] = context['object_list']
         return context
 
 
@@ -51,7 +52,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     template_name = 'wiki/articleCreate.html'
     fields = ['title', 'category', 'entry', 'header_image']
-    success_url = reverse_lazy('article_list')
+    success_url = reverse_lazy('wiki:article_list')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -68,7 +69,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
     template_name = 'wiki/articleUpdate.html'
     fields = ['title', 'category', 'entry', 'header_image']
-    success_url = reverse_lazy('article_list')
+    success_url = reverse_lazy('wiki:article_list')
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -87,3 +88,18 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+    
+    
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    template_name = 'wiki/commentCreate.html'
+    fields = ['entry']  # Assuming 'entry' is the field for the comment content
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.article_id = self.kwargs['article_id']  # Assuming the URL includes 'article_id'
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('wiki:article_detail', kwargs={'pk': self.kwargs['article_id']})
