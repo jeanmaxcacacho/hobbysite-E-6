@@ -10,8 +10,8 @@ these are provided in Django's default registration form
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    display_name = models.CharField(max_length=100)
-    email = models.EmailField()
+    display_name = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True)
     bio = models.TextField(blank=True)
 
     def __str__(self):
