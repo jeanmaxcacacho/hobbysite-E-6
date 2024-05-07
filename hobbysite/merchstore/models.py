@@ -1,28 +1,29 @@
 from django.db import models
-# Create your models here.
+from django.utils import timezone
 
-"""
-so the procedure is going to be:
-1. instantiate product types
-2. instantiate product per product type
-3. test the queries out in shell
-4. setup the templates
-"""
+from user_management.models import Profile
+
+# Create your models here.
 
 class ProductType(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
+    
+    class Meta:
+        ordering = ['name']
 
 
     def __str__(self):
         return self.name
-
-    
-    class Meta:
-        ordering = ['name']
     
 
 class Product(models.Model):
+    STATUS_CHOICES = (
+        ('Available', 'Available'),
+        ('On sale', 'On sale'),
+        ('Out of stock', 'Out of stock')
+    )
+
     name = models.CharField(max_length=255)
     product_type = models.ForeignKey(
         ProductType,
@@ -32,11 +33,46 @@ class Product(models.Model):
         )
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-
-
-    def __str__(self):
-        return f"{self.name} -- {self.product_type}"
+    owner = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE
+    )
+    stock = models.PositiveIntegerField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    image = models.ImageField(upload_to='merchstore_products/', null=True, blank=True)    
 
 
     class Meta:
         ordering = ['name']
+
+
+    def __str__(self):
+        return f"{self.name} -- {self.product_type} -- {self.owner.user.username}"
+
+
+class Transaction(models.Model):
+    STATUS_CHOICES = (
+        ('On cart', 'On cart'),
+        ('To pay', 'To pay'),
+        ('To ship', 'To ship'),
+        ('To receive', 'To receive'),
+        ('Delivered', 'Delivered')
+    )
+
+    buyer = models.ForeignKey(
+        Profile,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    amount = models.PositiveIntegerField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    created_on = models.DateTimeField(default=timezone.now)
+
+
+    def __str__(self):
+        return f"{self.product.name} -- {self.buyer.user.username} (buyer) -- {self.product.owner} (seller)"

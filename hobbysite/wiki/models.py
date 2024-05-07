@@ -1,23 +1,6 @@
 from django.db import models
-'''
-app_name: wiki
-URLs: 
-    List View: /wiki/articles
-    Detail View: /wiki/article/1
-Models:
-> ArticleCategory
-    > Name - max length is 255 characters ★
-    > Description - text field ★
-    Categories should be sorted by name in ascending order [?]
-> Article
-    > Title - max length is 255 characters ★
-    > Category - foreign key to ArticleCategory, sets to NULL when deleted ★
-    > Entry - text field ★ 
-    > Created On - datetime field, only gets set when the model is created ★
-    > Updated On - datetime field, always updates on last model update ★
-    > Articles should be sorted by the date it was created, in descending order ★
-'''
-# Create your models here.
+from django.conf import settings
+from django.utils import timezone
 
 class ArticleCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -31,13 +14,29 @@ class ArticleCategory(models.Model):
     
 class Article(models.Model):
     title = models.CharField(max_length=255)
-    category = models.ForeignKey(ArticleCategory, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(ArticleCategory, on_delete=models.SET_NULL, null=True, related_name='articles')
     entry = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(auto_now=True)
+    header_image = models.ImageField(upload_to='media\wiki', blank=True, null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='articles')
 
+    
     class Meta:
         ordering = ['-created_on']
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
+    entry = models.TextField()
+    created_on = models.DateTimeField(default=timezone.now)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return f"Comment by {self.author.username} on {self.article.title}"
