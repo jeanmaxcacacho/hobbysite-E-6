@@ -20,14 +20,18 @@
 {% endblock header %}
 
 {% block content %}
-{% if product.stock > 0 and user != product.owner.user %}
+{% if product.stock > 0 and user != product.owner.user and user.is_authenticated %}
   <form method="post" action="{% url 'merchstore:product_detail' product.pk %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="SUBMIT">Buy</button>
   </form>
 {% else %}
-  <p>This product is out of stock/you are the owner of this product.</p>
+  <p>You are unable to buy this product.</p>
+  <ul>
+    <li>If you are not logged in please do, only authenticated users may purchase.</li>
+    <li>Users are not allowed by the app to purchase their own products.</li>
+  </ul>
 {% endif %}
 
 <br>
