@@ -18,4 +18,8 @@ class RegistrationForm(UserCreationForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = "__all__"
+        fields = [
+            "display_name",
+            "display_picture",
+            "bio",
+        ]
