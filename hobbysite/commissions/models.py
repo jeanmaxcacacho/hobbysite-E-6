@@ -46,6 +46,9 @@ class Job(models.Model):
 
     def __str__(self):
         return self.role
+    
+    class Meta:
+        ordering = ['-status', '-people_required', 'role']
 
 class JobApplication(models.Model):
     APPLICATION_STATUS=[
@@ -67,4 +70,6 @@ class JobApplication(models.Model):
     )
 
     def __str__(self):
-        return self.status
+        return f"{self.job.role} applied by {self.applicant.user.username} is {self.get_status_display()}"
+    
+    ordering = ['-status', '-applied_on']
