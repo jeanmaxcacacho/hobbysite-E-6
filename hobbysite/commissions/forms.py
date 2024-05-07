@@ -8,9 +8,9 @@ class CommissionForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["owner"]
 
-class JobUpdateForm(forms.ModelForm):
+class CommissionUpdateForm(forms.ModelForm):
     class Meta:
-        model = Job
+        model = Commission
         fields = "__all__"
 
     def __init__(self, *args, **kwargs):
