@@ -11,6 +11,11 @@ these are provided in Django's default registration form
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=100, blank=True)
+    display_picture = models.ImageField(
+        upload_to="user_management/display_picture",
+        blank=True,
+        null=True
+        )
     email = models.EmailField(blank=True)
     bio = models.TextField(blank=True)
 
