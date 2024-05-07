@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, FormMixin
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Article
+from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 from user_management.models import Profile
 
@@ -15,14 +15,13 @@ class ArticleListView(LoginRequiredMixin, ListView):
     template_name = 'blog/article_list.html'
     context_object_name = 'articles'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        user_articles = queryset.filter(author=self.request.user.profile)
-        other_articles = queryset.exclude(author=self.request.user.profile)
-        queryset = list(user_articles) + list(other_articles)
-
-        return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_articles = Article.objects.filter(author=self.request.user.profile).order_by('category')
+        other_articles = Article.objects.exclude(author=self.request.user.profile).order_by('category')
+        context['user_articles'] = user_articles
+        context['other_articles'] = other_articles
+        return context
 
 class ArticleDetailView(FormMixin, DetailView):
     model = Article
@@ -39,6 +38,7 @@ class ArticleDetailView(FormMixin, DetailView):
         author_articles = Article.objects.filter(author=article.author).exclude(pk=article.pk)[:2]
         context['author_articles'] = author_articles
         context['form'] = self.get_form()
+        context['comments'] = Comment.objects.filter(article=self.get_object()).order_by('-created_on')
 
         return context
     
