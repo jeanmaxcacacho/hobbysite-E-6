@@ -54,6 +54,7 @@ def dashboard(request):
         "blog_articles": blog_articles,
         "user_profile": user_profile
     }
+
     return render (
         request,
         "homepage/dashboard.html",
