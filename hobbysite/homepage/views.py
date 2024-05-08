@@ -7,7 +7,6 @@ from commissions.models import JobApplication, Commission
 from wiki.models import Article as wikiArticle
 from blog.models import Article as blogArticle
 
-
 from user_management.models import Profile
 
 # Create your views here.
