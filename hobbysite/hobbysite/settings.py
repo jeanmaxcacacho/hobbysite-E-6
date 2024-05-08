@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1','167.71.213.39']
 
 
 # Application definition
@@ -91,8 +91,12 @@ WSGI_APPLICATION = 'hobbysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'newdb',
+        'USER': 'newuser',
+        'PASSWORD': 'newpassword',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -135,11 +139,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-]
-
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR/'static'
 
 MEDIA_URL = '/media/'
 
