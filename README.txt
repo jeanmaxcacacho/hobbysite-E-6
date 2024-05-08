@@ -12,8 +12,3 @@ Merchandise Store // Max
 Commission App // Ysaac
 Online Wiki // Louis
 Blog App // Paco
-
-_=_=_=_=_=_=_=_=
-
-DEPENDENCIES
-Pillow
