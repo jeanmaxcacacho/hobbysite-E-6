@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from merchstore.models import ProductType, Product, Transaction
-from wiki.models import Article
+from merchstore.models import Transaction
+from commissions.models import JobApplication
+from wiki.models import Article as wikiArticle
+from blog.models import Article as blogArticle
+
 
 from user_management.models import Profile
 
@@ -32,12 +35,15 @@ products bought & sold
 commissions created and joined
 wiki articles created
 blog articles created
+
+I'd rather have a clean view so I'll do the querying in the template itself
 """
 @login_required
 def dashboard(request):
     transactions = Transaction.objects.all()
-    wiki_articles = Article.objects.all()
-
+    jobApplications = JobApplication.objects.all()
+    wikiArticles = wikiArticle.objects.all()
+    blogArticles = blogArticle.objects.all()
     ctx = {
 
     }
