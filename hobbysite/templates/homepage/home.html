@@ -15,6 +15,12 @@
 <h1>Hello {{ user.username }}!</h1>
 <a href="{% url 'user_management:profile_update' %}">Update Profile</a>
 <a href="{% url 'homepage:dashboard' %}">Profile Dashboard</a>
+    {% if user.profile.display_picture %}
+        <p></p>
+        <p></p>
+        <p></p>
+        <img src="{{ user.profile.display_picture.url }}" alt="{{ user.profile.display_name }}'s display picture." width=200 height=200>
+    {% endif %}
 {% else %}
 <h1>Hello stranger!</h1>
 {% endif %}
