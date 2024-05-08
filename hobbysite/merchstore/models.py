@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 from user_management.models import Profile
 
@@ -45,6 +46,10 @@ class Product(models.Model):
     class Meta:
         ordering = ['name']
 
+
+    def get_absolute_url(self):
+        return reverse("merchstore:product_detail", args=[self.pk])
+    
 
     def __str__(self):
         return f"{self.name} -- {self.product_type} -- {self.owner.user.username}"

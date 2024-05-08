@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from .models import ProductType, Product, Transaction
-from .forms import TransactionForm, ProductForm, ProductUpdateForm
+from .forms import TransactionForm, ProductUpdateForm 
 
 # Create your views here.
 
@@ -67,15 +67,21 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    form_class = ProductForm
     template_name = "merchstore/product_create.html"
-    success_url = reverse_lazy("merchstore:product_list")
+    fields = [
+        "name",
+        "product_type",
+        "description",
+        "price",
+        "stock",
+        "status"
+    ]
 
 
     def form_valid(self, form):
         form.instance.owner = self.request.user.profile
         return super().form_valid(form)
-    
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product

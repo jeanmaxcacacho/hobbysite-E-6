@@ -1,44 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Create Product</title>
+<title>Create Product Listing</title>
 {% endblock title %}
 
-{% block header %}
-    <h1>Create Product</h1>
-{% endblock header %}
-
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
+<h1>Make Your Listing!</h1>
+    <form method="POST">
         {% csrf_token %}
-        <div>
-            <label for="id_name">Name:</label>
-            {{ form.name }}
-        </div>
-        <div>
-            <label for="id_product_type">Product Type:</label>
-            {{ form.product_type }}
-        </div>
-        <div>
-            <label for="id_description">Description:</label>
-            {{ form.description }}
-        </div>
-        <div>
-            <label for="id_price">Price:</label>
-            {{ form.price }}
-        </div>
-        <div>
-            <label for="id_stock">Stock:</label>
-            {{ form.stock }}
-        </div>
-        <div>
-            <label for="id_status">Status:</label>
-            {{ form.status }}
-        </div>
-        <div>
-            <label for="id_image">Image:</label>
-            {{ form.image }}
-        </div>
-        <button type="submit">Save</button>
+        {{ form.as_p }}
+        <button type="SUBMIT">Create</button>
     </form>
 {% endblock content %}
