@@ -3,7 +3,7 @@
 {% block title %}Hobbysite | Online Wiki App{% endblock %}
 
 {% block content %}
-    <a href="{% url 'wiki:article_list' %}">← Back to Article List</a> 
+    <p><a href="{% url 'wiki:article_list' %}">← Back to Article List</a></p>
 
     <div id="user-info">
         <p><b>Logged in:</b> {{ request.user }} <br></p>
@@ -18,6 +18,11 @@
 
         {% if article.header_image %}
             <img src="{{ article.header_image.url }}" alt="{{ article.title }} Image" style="max-width: 25%;">
+        {% endif %} <br>
+        
+        <!-- EDIT CURRENT ARTICLE, IF USER LOGGED IN IS THE AUTHOR -->
+        {% if user.is_authenticated and request.user.profile == article.author %}
+            <a href="{% url 'wiki:article_edit' article.pk %}">Edit This Article</a>  <!-- New line added -->
         {% endif %}
 
         <p>
@@ -31,9 +36,6 @@
         <p>{{ article.entry|linebreaks }}</p>
     </div>
 
-    {% if user.is_authenticated and user == article.author %}
-        <a href="{% url 'wiki:article_edit' article.pk %}">Edit Article</a>
-    {% endif %}
 
     <div>
         <h2>Comments</h2>
