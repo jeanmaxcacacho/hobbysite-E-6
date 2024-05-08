@@ -14,17 +14,20 @@
     <div>
         <hr>
 
+        <!-- ARTICLE TITLE-->
         <h2>{{ article.title }}</h2>
 
+        <!-- DISPLAY HEADER IMAGE-->
         {% if article.header_image %}
             <img src="{{ article.header_image.url }}" alt="{{ article.title }} Image" style="max-width: 25%;">
         {% endif %} <br>
         
         <!-- EDIT CURRENT ARTICLE, IF USER LOGGED IN IS THE AUTHOR -->
         {% if user.is_authenticated and request.user.profile == article.author %}
-            <a href="{% url 'wiki:article_edit' article.pk %}">Edit This Article</a>  <!-- New line added -->
+            <a href="{% url 'wiki:article_edit' article.pk %}">Edit This Article</a>
         {% endif %}
 
+        <!-- ARTICLE DETAILS-->
         <p>
             <b>Author:</b> {{ article.author }} <br>
             <b>Article Created:</b> {{ article.created_on }} <br>
@@ -36,7 +39,7 @@
         <p>{{ article.entry|linebreaks }}</p>
     </div>
 
-
+    <!-- COMMENTS DISPLAY-->
     <div>
         <h2>Comments</h2>
         {% for comment in article.comments.all %}
@@ -50,7 +53,8 @@
     </div>
 
     <hr>
-
+    
+    <!-- ADD COMMENT FORM TO CREATECOMMENTVIEW-->
     <h2>Add a Comment</h2>
     <form method="post" action="{% url 'wiki:comment_create' article.pk %}">
         {% csrf_token %}
