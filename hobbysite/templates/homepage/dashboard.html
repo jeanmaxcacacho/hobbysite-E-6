@@ -31,6 +31,7 @@
     <h3>You haven't sold any products yet.</h3>
 {% endif %}
 
+<h2>Commissions Created</h2>
 {% if commissions_created %}
     <ul>
         {% for commission in commissions_created %}
@@ -41,6 +42,7 @@
     <h3>You haven't created any commissions yet.</h3>
 {% endif %}
 
+<h2>Commissions Joined</h2>
 {% if commissions_joined %}
     <ul>
         {% for commission in commissions_joined %}
@@ -51,13 +53,29 @@
     <h3>You haven't joined any commissions yet.</h3>
 {% endif %}
 
+<h2>Wiki Articles Created</h2>
 {% if wiki_articles %}
+    <ul>
+        {% for article in wiki_articles %}
+            <li>{{ article.title }} -- {{ article.updated_on }}</li>
+        {% endfor %}
+    </ul>
 {% else %}
+    <h3>You haven't written any wiki articles yet.</h3>
 {% endif %}
 
+<h2>Blog Articles Created</h2>
 {% if blog_articles %}
+    <ul>
+        {% for article in blog_articles %}
+            <li>{{ article.title }} -- {{ article.updated_on }}</li>
+        {% endfor %}
+    </ul>
 {% else %}
+    <h3>You haven't written any blog articles yet.</h3>
 {% endif %}
+
+<hr>
 
 <a href="{% url 'homepage:home' %}">Go back</a>
 {% endblock content %}
