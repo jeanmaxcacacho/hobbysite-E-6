@@ -45,7 +45,10 @@ def dashboard(request):
     wikiArticles = wikiArticle.objects.all()
     blogArticles = blogArticle.objects.all()
     ctx = {
-
+        "transactions": transactions,
+        "jobApplications": jobApplications,
+        "wikiArticles": wikiArticles,
+        "blogArticles": blogArticles,
     }
     return render (
         request,
