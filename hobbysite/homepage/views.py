@@ -29,12 +29,7 @@ def homepage(request):
         }
     )
 
-"""
-products bought & sold
-commissions created and joined
-wiki articles created
-blog articles created
-"""
+
 @login_required
 def dashboard(request):
     user_name = request.user.profile.display_name
