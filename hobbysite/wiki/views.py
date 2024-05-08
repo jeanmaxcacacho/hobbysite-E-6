@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import Article, ArticleCategory, Comment
+from user_management.models import Profile
 
 
 
@@ -14,12 +15,10 @@ class ArticleListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        user = self.request.user
-        if user.is_authenticated:
-            user_articles = queryset.filter(author=user)
-            other_articles = queryset.exclude(author=user)
-            queryset = {'user_articles': user_articles, 'other_articles': other_articles}
-        return queryset
+        user = Profile.objects.get(user=self.request.user)
+        user_articles = queryset.filter(author=user)
+        other_articles = queryset.exclude(author=user)
+        return {'user_articles': user_articles, 'other_articles': other_articles}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,7 +42,6 @@ class ArticleDetailView(DetailView):
         category = article.category
         other_articles = Article.objects.filter(category=category).exclude(id=article.id)[:2]
         context['other_articles'] = other_articles
-
         return context
 
 
@@ -53,14 +51,16 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = 'wiki/articleCreate.html'
     fields = ['title', 'category', 'entry', 'header_image']
     success_url = reverse_lazy('wiki:article_list')
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ArticleCategory.objects.all()  # Add this line to pass categories to the template
+        context['categories'] = ArticleCategory.objects.all()
         return context
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        user = self.request.user
+        profile = user.profile  # Assuming 'profile' is the related name for the profile field in your User model
+        form.instance.author = profile
         return super().form_valid(form)
 
 
@@ -88,8 +88,8 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
-    
-    
+
+
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
@@ -97,8 +97,8 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     fields = ['entry']  # Assuming 'entry' is the field for the comment content
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.article_id = self.kwargs['article_id']  # Assuming the URL includes 'article_id'
+        form.instance.author = self.request.user.profile
+        form.instance.article_id = self.kwargs['article_id']
         return super().form_valid(form)
 
     def get_success_url(self):

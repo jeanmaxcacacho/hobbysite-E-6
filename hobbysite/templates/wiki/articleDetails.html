@@ -3,7 +3,7 @@
 {% block title %}Hobbysite | Online Wiki App{% endblock %}
 
 {% block content %}
-    <a href="{% url 'wiki:article_list' %}">← Back to Article List</a> 
+    <p><a href="{% url 'wiki:article_list' %}">← Back to Article List</a></p>
 
     <div id="user-info">
         <p><b>Logged in:</b> {{ request.user }} <br></p>
@@ -14,14 +14,22 @@
     <div>
         <hr>
 
+        <!-- ARTICLE TITLE-->
         <h2>{{ article.title }}</h2>
 
+        <!-- DISPLAY HEADER IMAGE-->
         {% if article.header_image %}
             <img src="{{ article.header_image.url }}" alt="{{ article.title }} Image" style="max-width: 25%;">
+        {% endif %} <br>
+        
+        <!-- EDIT CURRENT ARTICLE, IF USER LOGGED IN IS THE AUTHOR -->
+        {% if user.is_authenticated and request.user.profile == article.author %}
+            <a href="{% url 'wiki:article_edit' article.pk %}">Edit This Article</a>
         {% endif %}
 
+        <!-- ARTICLE DETAILS-->
         <p>
-            <b>Author:</b> {{ article.author.username }} <br>
+            <b>Author:</b> {{ article.author }} <br>
             <b>Article Created:</b> {{ article.created_on }} <br>
             <b>Article Updated:</b> {{ article.updated_on }}
         </p>
@@ -31,10 +39,7 @@
         <p>{{ article.entry|linebreaks }}</p>
     </div>
 
-    {% if user.is_authenticated and user == article.author %}
-        <a href="{% url 'wiki:article_edit' article.pk %}">Edit Article</a>
-    {% endif %}
-
+    <!-- COMMENTS DISPLAY-->
     <div>
         <h2>Comments</h2>
         {% for comment in article.comments.all %}
@@ -48,7 +53,8 @@
     </div>
 
     <hr>
-
+    
+    <!-- ADD COMMENT FORM TO CREATECOMMENTVIEW-->
     <h2>Add a Comment</h2>
     <form method="post" action="{% url 'wiki:comment_create' article.pk %}">
         {% csrf_token %}
