@@ -64,7 +64,7 @@ class JobApplication(models.Model):
         related_name='job'
     )
     job = models.ForeignKey(
-        'Job',
+        Job,
         on_delete=models.CASCADE,
         related_name='applicant'
     )
