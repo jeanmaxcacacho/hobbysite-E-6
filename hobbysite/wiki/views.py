@@ -59,9 +59,12 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        profile = user.profile  # Assuming 'profile' is the related name for the profile field in your User model
+        profile = user.profile
         form.instance.author = profile
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('wiki:article_detail', kwargs={'pk': self.object.pk})
 
 
 
@@ -94,7 +97,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     template_name = 'wiki/commentCreate.html'
-    fields = ['entry']  # Assuming 'entry' is the field for the comment content
+    fields = ['entry']
 
     def form_valid(self, form):
         form.instance.author = self.request.user.profile
