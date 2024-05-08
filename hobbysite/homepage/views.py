@@ -44,11 +44,13 @@ def dashboard(request):
     jobApplications = JobApplication.objects.all()
     wikiArticles = wikiArticle.objects.all()
     blogArticles = blogArticle.objects.all()
+    userProfile = request.user.profile
     ctx = {
         "transactions": transactions,
         "jobApplications": jobApplications,
         "wikiArticles": wikiArticles,
         "blogArticles": blogArticles,
+        "userProfile": userProfile
     }
     return render (
         request,
