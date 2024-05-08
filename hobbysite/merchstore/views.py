@@ -81,13 +81,16 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user.profile
         return super().form_valid(form)
+    
+
+    def get_success_url(self):
+        return reverse_lazy("merchstore:product_detail", kwargs={"pk": self.object.pk})
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductUpdateForm
     template_name = "merchstore/product_update.html"
-    success_url = reverse_lazy("merchstore:product_list")
 
 
     def form_valid(self, form):
@@ -97,6 +100,10 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         else:
             product.status = 'Available'
         return super().form_valid(form)
+    
+
+    def get_success_url(self):
+        return reverse_lazy("merchstore:product_detail", kwargs={"pk": self.object.pk})
     
 
 class CartView(LoginRequiredMixin, ListView):
