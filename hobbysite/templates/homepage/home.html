@@ -24,6 +24,12 @@
 {% block content %}
 <h2>So what do you want to do today?</h2>
 <ul>
+    <li><a href="{% url 'blog:article-list' %}">
+        Hobbysite Blog
+    </a></li>
+    <li><a href="{% url 'commissions:commission-list' %}">
+        Hobbysite Commissions
+    </a></li>
     <li><a href="{% url 'merchstore:product_list' %}">
         Hobbysite Store
     </a></li>
