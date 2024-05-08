@@ -40,7 +40,7 @@ class Product(models.Model):
     )
     stock = models.PositiveIntegerField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    image = models.ImageField(upload_to='merchstore_products/', null=True, blank=True)    
+    image = models.ImageField(upload_to='media/merchstore_products/', null=True, blank=True)    
 
 
     class Meta:
