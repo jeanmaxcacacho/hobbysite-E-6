@@ -107,8 +107,7 @@ class CommissionCreateView(LoginRequiredMixin, CreateView):
     model = Commission
     form_class = CommissionForm
     template_name = 'commissions/commissions_create.html'
-    success_url = reverse_lazy('commissions:commission-list')
-
+    
     def form_valid(self, form):
         if self.request.user.is_authenticated:
             commission = form.save(commit=False)
@@ -120,9 +119,12 @@ class CommissionCreateView(LoginRequiredMixin, CreateView):
                 job = job_form.save(commit=False)
                 job.commission = commission
                 job.save()
+    
+            return super().form_valid(form)
 
-            return redirect(self.success_url)
- 
+    def get_success_url(self):
+        return reverse('commissions:commission-detail', kwargs={'pk': self.object.pk})
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
