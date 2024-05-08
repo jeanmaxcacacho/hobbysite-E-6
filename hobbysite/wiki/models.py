@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
+from user_management.models import Profile
+
 class ArticleCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -19,7 +21,7 @@ class Article(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(auto_now=True)
     header_image = models.ImageField(upload_to='media\wiki', blank=True, null=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='articles')
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='articles')
 
     
     class Meta:
@@ -29,7 +31,7 @@ class Article(models.Model):
         return self.title
 
 class Comment(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
     entry = models.TextField()
     created_on = models.DateTimeField(default=timezone.now)
