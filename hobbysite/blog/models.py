@@ -18,7 +18,7 @@ class Article(models.Model):
     author = models.ForeignKey(
         Profile,
         on_delete=models.SET_NULL,
-        related_name='article',
+        related_name='blog_articles',
         null=True,
         blank=True,
     )
