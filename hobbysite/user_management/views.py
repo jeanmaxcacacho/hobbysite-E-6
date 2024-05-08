@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import RegistrationForm, ProfileUpdateForm
@@ -29,15 +28,3 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user.profile
-
-
-@login_required
-def dashboard(request):
-    profile = request.user.profile
-    return render(
-        request,
-        "user_management/dashboard.html",
-        {
-            "profile": profile
-        }
-    )
