@@ -6,6 +6,9 @@
 
 {% block header %}
 <h1>{{ product.name }}</h1>
+{% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}'s image." width = 400 height = 400>
+{% endif %}
 <ul>
   <p><li>
     {{ product.description }}
